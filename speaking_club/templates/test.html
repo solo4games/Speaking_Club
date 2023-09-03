@@ -1,0 +1,3192 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Тест на уровень знаний
+{% endblock %}
+
+{% block content %}
+
+<head>
+    <script
+        src="https://myyestoday.ru/pl/cms/layout/js?id=12808&hash=713ecd8e1e1aa77a6d2fa50f279aca8d&bundle=1"></script>
+
+    <script src="{% static 'js/audio.js' %}"></script>
+
+    <link rel="stylesheet" href="{% static 'css/audio.css' %}">
+
+    <style>
+        @import url("https://myyestoday.ru/pl/cms/layout/css?id=12808&hash=df558f16426d09374a90fbd6d3551640&bundle=1");
+
+        #container-wrapper {}
+
+        body {
+            background-color: #ebf0fa;
+        }
+
+        .dropdown-wrapper {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+
+        .dropdown-wrapper .dropdown {
+            margin: .2em;
+        }
+
+        .dropdown-wrapper span {
+            white-space: pre-wrap;
+        }
+
+        .dropdown-wrapper span.true {
+            color: #5199FF;
+            margin: 0 .1em;
+        }
+
+        #galery div.next-slide {
+            position: fixed;
+            bottom: 50px;
+            left: 10px;
+            right: 10px;
+            /* width: 100vw; */
+            display: flex;
+            justify-content: center;
+        }
+
+        .dropdown-wrapper span.false {
+            color: lightcoral;
+            margin: 0 .1em;
+        }
+
+        .dropdown-wrapper .dropdown-toggle {
+            padding: 0;
+        }
+
+        #audio-tts {
+            max-width: 40em !important;
+            margin-left: 0 !important;
+            margin-bottom: 1em !important;
+        }
+
+        #audio-tts #podcast-container {
+            height: auto !important;
+            margin-left: 0 !important;
+            padding-left: 0 !important;
+        }
+
+        #quiz9-wrapper ul {
+            padding-left: 0 !important;
+        }
+
+        #galerydiv>h3 {
+            margin-bottom: 1em;
+        }
+
+        .text-highlighted {
+            color: #6699ff;
+        }
+
+        @media (max-width: 600px) {
+            .dropdown-wrapper .dropdown-menu.show {
+                all: unset !important;
+                position: fixed !important;
+                left: 0 !important;
+                right: 0 !important;
+                bottom: 0 !important;
+                opacity: 1 !important;
+                height: auto !important;
+                visibility: visible !important;
+                display: grid !important;
+                padding: 25px 15px 48px !important;
+                border: 0 !important;
+                flex-wrap: wrap !important;
+                background-color: #FFF !important;
+                z-index: 10000 !important;
+            }
+
+            .dropdown-wrapper .dropdown-menu.show:has(input) {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+            }
+
+            .dropdown-wrapper .dropdown-menu.show>.dropdown-item {
+                background-color: #e0ecfd;
+                margin: 1%;
+                border-radius: 10px;
+            }
+
+            #quiz9-wrapper.type2 ul li button {
+                width: 100%;
+            }
+        }
+
+        #audio-tts>div>div.ft-container {
+            font-size: 1rem !important;
+        }
+
+        #galery * {
+            font-family: 'Jost';
+            font-size: unset !important;
+        }
+
+        .dropdown-wrapper * {
+            font-size: large !important;
+        }
+
+        #galery div.next-slide>button {
+            max-width: 30em;
+            background-color: #5199FF;
+            color: #FFF;
+            font-size: large !important;
+            /* margin-top: 20px; */
+        }
+
+        .progress-wrapper {
+            display: none !important;
+            position: fixed;
+            max-width: inherit;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            margin: auto;
+        }
+
+        .resultdiv {
+            margin-top: 20%;
+            margin-left: auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .resultdiv a {
+            max-width: 30em;
+            font-size: larger;
+            background-color: #5199FF;
+            width: fit-content;
+            color: #FFF;
+            border-radius: 5px !important;
+            margin-top: 10px;
+        }
+
+        #container-wrapper {
+            font-size: 125%;
+            margin-bottom: 100px;
+        }
+
+        .dropdown-menu.show:has(input) {
+            display: flex;
+            padding: 10%;
+        }
+
+        .dropdown-menu.show:has(input) input {
+            width: -webkit-fill-available;
+        }
+
+
+        .dropdown-menu.show:has(input) button {
+            background-color: #5199FF;
+            margin: 0 1%;
+            color: #FFF;
+        }
+
+        .test-wrapper {
+            position: relative;
+        }
+
+        .custom-fixed-top {
+            position: fixed;
+            top: 1rem;
+            bottom: 1rem;
+            left: 1rem;
+            display: flex;
+            justify-content: center;
+            justify-items: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<div class="tabs-wrapper">
+
+    <div class="test-wrapper">
+        {% if test_name == "writing" %}
+        <div class="container nav-Writing" id="container-wrapper">
+            <div class='galery1' id='galery'>
+                <div class='galery_div1_1' id='galerydiv'>
+                    <h3>Текст 1</h3>
+                    <div class="br"></div>
+                    <div>
+                        <div class="dropdown-wrapper">
+                            <span>Well, I</span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="9132d104-2236-4960-93c3-3948a8e97405">
+                                    <input type="text" trueanswer="finally|at last">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span class="text-highlighted">(наконец то)</span><span> went home to Mobile again.</span>
+                        </div>
+
+                        <div class="dropdown-wrapper">
+                            <span>The train</span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="7263ddb7-c27f-4019-8b8c-24228ca8df09">
+                                    <input type="text" trueanswer="got|arrived">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span class="text-highlighted">(прибыл)</span><span>into Mobile station about three o'clock
+                                in
+                                the morning, and Sue and I got off.</span>
+                        </div>
+
+                        <div class="dropdown-wrapper">
+                            <span>We walked into the town and finally</span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="1284edef-88ea-4dac-b5f1-70e843ac7a51">
+                                    <input type="text" trueanswer="found">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span class="text-highlighted">(нашли)</span><span> a place to sleep in</span>
+                        </div>
+
+                        <div class="dropdown-wrapper">
+                            <span>an</span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="87bd9df2-b2b1-4734-9be9-8bd89caa12e3">
+                                    <input type="text" trueanswer="empty">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span class="text-highlighted">(пустой)</span> <span> building</span>
+                        </div>
+
+                        <div class="dropdown-wrapper">
+                            <span>The next morning I</span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="77ff401a-b8dc-4d9a-8425-3c653a3d17d5">
+                                    <input type="text" trueanswer="bought">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span class="text-highlighted">(купил)</span><span> some breakfast and got Sue some bananas
+                                to
+                                eat. Then we went to see Mom.</span>
+                        </div>
+                        <div class="dropdown-wrapper">
+                            <span>She was</span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="486a1d08-2e8f-486c-a208-36a6a033ceae">
+                                    <input type="text" trueanswer="pleased|happy|glad">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span class="text-highlighted">(ей было приятно)</span> <span> to see me. </span>
+                        </div>
+
+                        <div class="dropdown-wrapper">
+                            <div class="br"></div>
+                            <span>'Oh, Forrest,' she said, 'you're home at last!'</span>
+                            <div class="br"></div>
+                            <span>'Yes, Mom,' I said.</span>
+                            <div class="br"></div>
+                            <span>But I didn't stay long. Two days later, Sue and I got the bus to Bayou La Batre, where
+                                Bubba's parents lived, and I </span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="73016728-001b-422a-ad6c-718478ca6657">
+                                    <input type="text" trueanswer="explained">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span class="text-highlighted">(объяснил)</span> <span> to Bubba's daddy about the shrimp
+                                business that Bubba and</span>
+                        </div>
+
+                        <div class="dropdown-wrapper">
+                            <span>I planned to start after we</span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="c006cd5a-d497-4213-ba57-c76e2a6ef517">
+                                    <input type="text" trueanswer="came out">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span>of the army</span><span class="text-highlighted">(вышли из армии)</span>
+                        </div>
+
+                        <div class="dropdown-wrapper">
+                            <span>He</span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="5f458913-d5f7-405a-9fee-e40aaf98e5f7">
+                                    <input type="text" trueanswer="listened">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span class="text-highlighted">(послушал)</span><span> , and he was very interested. </span>
+                        </div>
+
+                        <div class="dropdown-wrapper">
+                            <span>And the next day he took Sue and me out in his little boat, to</span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="87005f29-89ee-4b42-8fec-b467d775f5e8">
+                                    <input type="text" trueanswer="look for|search for">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span class="text-highlighted">(искать)</span> <span> a good place to start the shrimp
+                                business.</span>
+                        </div>
+
+                        <div class="dropdown-wrapper">
+                            <span>It took</span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="c570fb94-4b26-4f68-9ee8-e0b23462476a">
+                                    <input type="text" trueanswer="almost|nearly|about">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span class="text-highlighted">(почти)</span> <span> a month to start things up - to get
+                                nets,
+                                and a boat, and everything.</span>
+                        </div>
+                        <div class="br"></div>
+
+                        <div class="dropdown-wrapper">
+                            <span>Finally the day came when Sue and I</span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="a9bd4391-6abc-4d36-ba41-8f1cdce43bed">
+                                    <input type="text" trueanswer="were ready">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span class="text-highlighted">(были готовы)</span> <span> to go shrimping. And by that
+                                night we
+                                had hundreds and hundreds of shrimps in our nets!
+                            </span>
+                        </div>
+
+                        <div class="br"></div>
+                        <div class="dropdown-wrapper">
+                            <span>It was the beginning of my shrimp business. We worked hard, all that summer, and that
+                                autumn and winter and the next spring. And after a year, Mom was working for me, and Mr
+                                Tribble, and Curtis (my old football friend), and Bubba's daddy.
+                            </span>
+                            <div class="br"></div>
+                            <span>At the end of that year, we had thirty thousand dollars!</span>
+                            <div class="br"></div>
+                            <span>Everybody was very happy. But me? I was thinking of Jenny, of course. I wanted to find
+                                her again. And one day I</span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="bb22423f-d1ef-44b8-b6f6-9f7ac20f2f75">
+                                    <input type="text" trueanswer="dressed|got dressed">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span class="text-highlighted">(оделся)</span> <span> in my best clothes and got the bus to
+                                Mobile, and I went to Jenny's Mom's house.</span>
+                        </div>
+                        <div class="br"></div>
+
+
+                        <div class="dropdown-wrapper">
+                            <span>'Forrest Gump!' she said, when she saw me. 'Come on in!'</span>
+                            <div class="br"></div>
+                            <span>Well, we talked about Mom and the shrimp business and everything. Then I asked about
+                                Jenny.
+                            </span>
+                            <div class="br"></div>
+                            <span>'I don't</span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="7c33fd15-4e4e-4fea-8d75-bc8cc3d22ec3">
+                                    <input type="text" trueanswer="hear">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span class="text-highlighted">(слышать)</span> <span> from her very often,' she
+                                said.</span>
+                        </div>
+
+                        <div class="dropdown-wrapper">
+                            <span>'I think they live </span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="2093024d-e988-400b-8cfc-2b9cf7f74699">
+                                    <input type="text" trueanswer="somewhere">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span class="text-highlighted">(где-то)</span> <span> in North Carolina now.'</span>
+                        </div>
+                        <div class="br"></div>
+                        <div class="dropdown-wrapper">
+                            <span>'They?' I said.</span>
+                            <div class="br"></div>
+                            <span>Didn't you know?' she said. 'Jenny</span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="225357ee-6fa6-4961-94d6-f6ed40f4e871">
+                                    <input type="text" trueanswer="married|got married">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span class="text-highlighted">(вышла замуж)</span><span> two years ago;</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class='galery2' id='galery'>
+                <div class='galery_div2_1' id='galerydiv'>
+
+                    <div class="br"></div>
+                    <div class="br"></div>
+                    <div class="br"></div>
+                    <h3>Текст 2</h3>
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span>Does the</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="f45a67df-242e-49af-b259-f5b3804a25df">
+                                <input type="text" trueanswer="appearance">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(внешность)</span><span> play a big role for you?</span>
+                    </div>
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span>Or still do you</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="fc888756-694c-4d96-ad72-3c660fd5d889">
+                                <input type="text" trueanswer="suppose|guess|presume">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(предполагать)</span> <span> that a book can’t be judged by its
+                            cover?</span>
+                    </div>
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span>Are there such</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="8fb9a113-53b4-43c4-ad81-93b3f8b1ea84">
+                                <input type="text" trueanswer="traits">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span> of character </span><span class="text-highlighted"> (черты характера)</span>
+                    </div>
+                    <div class="dropdown-wrapper">
+                        <span>that you can't </span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="bf0d3a6c-2de5-4b6e-9373-3cbd172f6917">
+                                <input type="text" trueanswer="tolerate|stand|endure|suffer">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(терпеть)</span> <span> ? What traits in person’s character you
+                            like
+                            most of all?
+                        </span>
+                    </div>
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span>When we talk about face, legs, man’s figure, we talk about his appearance. What kinds of
+                            facial features can be?
+                        </span>
+                        <div class="br"></div>
+                        <span>There are three main face types - square, round and oval. The most attractive type is
+                            considered to be an oval one. </span>
+                        <div class="br"></div>
+                        <span>People can be plump, skinny, fat, and of</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="8470e10e-cd7b-497e-af36-794ce2624765">
+                                <input type="text" trueanswer="average">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(средний)</span> <span> weight.</span>
+                    </div>
+                    <div class="br"></div>
+
+                    <div class="dropdown-wrapper">
+                        <span>When we talk about a person's character, appearance is always </span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="1637745b-aed6-4bbc-9ff7-db386591a0fb">
+                                <input type="text" trueanswer="insignificant">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(незначительный)</span><span>. Why? </span>
+                    </div>
+
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span>Because it</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="bf802721-37f5-4cf2-9593-9b924731c177">
+                                <input type="text" trueanswer="doesn't matter">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(без разницы)</span><span> how beautiful the man is,</span>
+                    </div>
+
+                    <div class="dropdown-wrapper">
+                        <span>his character is the</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="6a5a33e3-b1c1-4f6a-a915-616e9157734b">
+                                <input type="text" trueanswer="main|primary|principle">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(главный)</span><span> indicator of the real beauty.
+                        </span>
+                    </div>
+
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span></span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="e9599e4a-cb89-47bb-a20d-489a2fa9ae16">
+                                <input type="text" trueanswer="frankly|honestly">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span> speaking</span> <span class="text-highlighted">(откровенно говоря)</span> <span> , nobody
+                            likes a greedy,
+                            tactless, rude and ill-natured person.
+                        </span>
+                    </div>
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span>It's quite another matter to communicate with a nice, amiable, generous and good-hearted
+                            man.</span>
+                        <div class="br"></div>
+                        <span>Personally I am a girl of a character.</span>
+                        <div class="br"></div>
+                        <span> I can be both cheerful and </span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="0bdb187c-c615-4395-84e3-db57ced5b6eb">
+                                <input type="text" trueanswer="easy-going">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(легкий на подъем)</span> <span> and at the same time thoughtful
+                            and
+                            reserved.
+                        </span>
+                    </div>
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span>It</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="2e426201-991a-4d9a-a02b-38f5a805b717">
+                                <input type="text" trueanswer="means|indicates">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(означает)</span> <span> that my mood is always changing, but
+                            still
+                            positive character</span>
+                    </div>
+                    <div class="dropdown-wrapper">
+                        <span>traits still</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="5b8e1ebd-8ccf-45be-a787-a58568e59e58">
+                                <input type="text" trueanswer="prevail|dominate">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(превалируют)</span><span> building</span>
+                    </div>
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span>Speaking about my appearance, I'm very elegant.</span>
+                        <div class="br"></div>
+                        <span>I don’t have a gram of</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="c0a63846-2570-4d93-b987-c9bea35f98dc">
+                                <input type="text" trueanswer="excess weight|overweight">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(лишний вес)</span><span> .</span>
+                    </div>
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span>My friends say that my charm is</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="2caa85ab-b861-401b-904f-6f471ca54150">
+                                <input type="text" trueanswer="irresistible">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="text-highlighted">(неотразимый)</span><span> .</span>
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span>But I don’t focus too much on outer beauty.</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="dc5846ee-1996-43fa-834b-6ef480bdc93d">
+                                <input type="text" trueanswer="inner|inside">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span>beauty </span> <span class="text-highlighted">(внутренняя красота)</span> <span> is much
+                            more
+                            important</span>
+                    </div>
+                </div>
+            </div>
+            <div class='galery3' id='galery'>
+                <div class='galery_div3_1' id='galerydiv'>
+                    <div class="br"></div>
+                    <div class="br"></div>
+                    <div class="br"></div>
+                    <h3>Текст 3</h3>
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span>Ruby, a dynamic, universal language, was designed and</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="c900047d-5282-4aa2-802e-053c5eef5bbe">
+                                <input type="text" trueanswer="developed">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(развит)</span><span> by Yukihiro Matsumoto in 1990s, with a
+                            focus
+                            on the syntax that was easy to read by humans.</span>
+                    </div>
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span>This language</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="3cbd03e0-59b5-441a-bdcc-8966894a43a4">
+                                <input type="text" trueanswer="supports|maintains">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(поддерживает)</span> <span> multiple programming
+                            paradigms,</span>
+                    </div>
+                    <div class="dropdown-wrapper">
+                        <span></span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="033a228e-c264-4826-94d3-fd02e7d3b9fd">
+                                <input type="text" trueanswer="including">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(включая)</span> <span> object-oriented, functional, and
+                            imperative.</span>
+                    </div>
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span>This</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="29fed249-b532-47f4-8fd5-5176c02370ad">
+                                <input type="text" trueanswer="feature|peculiarity|singularity|trait">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(особенность)</span> <span> makes it a very</span>
+                    </div>
+                    <div class="dropdown-wrapper">
+                        <span></span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="80dbb0f2-0fac-41b0-8e25-269bbc499443">
+                                <input type="text" trueanswer="flexible">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(гибкий)</span><span> programming language.
+                        </span>
+                    </div>
+
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span>Just like Python, it’s simple and readable.</span>
+                        <div class="br"></div>
+                        <span>As a result, it’s widely</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="a4aa0634-6e65-4451-93ba-b08566baa7b6">
+                                <input type="text" trueanswer="regarded">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(считается)</span><span> as one of the easiest programming
+                            languages to learn. </span>
+                    </div>
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span>Just like Python, Ruby also enjoys the love of its</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="38141252-5a91-4d58-8af0-ee6dbba9127e">
+                                <input type="text" trueanswer="dedicated|loyal|devoted">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(преданный)</span><span> community.</span>
+                        <div class="br"></div>
+                        <span>Ruby acts as a great tool if you need to deal with the backend aspect of your work.</span>
+                    </div>
+
+                    <div class="progress-wrapper">
+                        <div class="progress" id="total-progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                                aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% elif test_name == "listening" %}
+        <div class="container nav-Listening" id="container-wrapper">
+            <div class='galery1' id='galery'>
+                <div class='galery_div1_1' id='galerydiv'>
+                    <h3>Прослушайте аудио и выберите правильный ответ</h3>
+                    <div class='audio-tts3838 audio-div' id='audio-tts'>
+                        <audio
+                            src="https://fs.getcourse.ru/fileservice/file/download/a/44237/sc/345/h/a892f97dc21fa5b3858aa3d0c636efed.mp4"></audio>
+                        <div class="podcastt-container podcastt-container-one">
+                            <div class="ht-container">
+                                <div class="podcastt-playpause">
+                                </div>
+                                <div class="podcastt-title"></div>
+                            </div>
+                            <div class="podcastt-progress">
+                                <div id="progress-slider" class="podcastt-progress"></div>
+                            </div>
+                            <div class="ft-container">
+                                <div class="podcastt-time">00:00 / 00:00</div>
+                                <div class="podcastt-speed">
+                                    <a class="podcastt-speed-5" href="javascript:void(0)">0.5x</a> / <a
+                                        class="podcastt-speed-10 active" href="javascript:void(0)">1x</a> / <a
+                                        class="podcastt-speed-15" href="javascript:void(0)">1.5x</a> / <a
+                                        class="podcastt-speed-20" href="javascript:void(0)">2x</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="1d6e8817-49bd-47b4-9b3d-1e95f54f1a52">
+                        <h4>1. What happened when the narrator was driving to work?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)" true>the narrator broke the traffic rule</button>
+                            </li>
+                            <li><button onclick="checkQuiz9(this)">the narrator met her old friend</button></li>
+                            <li><button onclick="checkQuiz9(this)">the narrator decided to come back home</button></li>
+
+                        </ul>
+                    </div>
+                    <div class="br"></div>
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="991f6f48-24a9-4a4c-85a8-9e07e76bf0fb">
+                        <h4>2. What traffic rule did the narrator break?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">The narrator drove across the wrong lane</button>
+                            </li>
+                            <li><button onclick="checkQuiz9(this)" true>the narrator crossed a double solid
+                                    line</button>
+                            </li>
+                            <li><button onclick="checkQuiz9(this)">The narrator didn't have the driving license with
+                                    her</button></li>
+                        </ul>
+                    </div>
+                    <div class="br"></div>
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="0fb19a8c-082e-4cd1-8170-516d6a896eeb">
+                        <h4>3. Who smashed into the narrator’s car?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)" true>a driver who backed up</button></li>
+                            <li><button onclick="checkQuiz9(this)">her old friend</button></li>
+                            <li><button onclick="checkQuiz9(this)">a police officer</button></li>
+                        </ul>
+                    </div>
+                    <div class="br"></div>
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="9caa8730-0822-45c3-875e-06e596f0a80a">
+                        <h4>4. What did the police officer say to the narrator at first? </h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">That she was beautiful</button></li>
+                            <li><button onclick="checkQuiz9(this)">That she is a good driver and he praised her</button>
+                            </li>
+                            <li><button onclick="checkQuiz9(this)" true>that she violated traffic rules, she had a dead
+                                    body and drugs in her car</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class='galery2' id='galery'>
+                <div class='galery_div2_1' id='galerydiv'>
+                    <h3>Прослушайте аудио и выберите правильный ответ</h3>
+                    <div class='audio-tts3838 audio-div' id='audio-tts'>
+                        <audio
+                            src="https://fs.getcourse.ru/fileservice/file/download/a/44237/sc/96/h/69981612b5d5deda603d382b041c761f.mp4"></audio>
+                        <div class="podcastt-container podcastt-container-one">
+                            <div class="ht-container">
+                                <div class="podcastt-playpause">
+                                </div>
+                                <div class="podcastt-title"></div>
+                            </div>
+                            <div class="podcastt-progress">
+                                <div id="progress-slider" class="podcastt-progress"></div>
+                            </div>
+                            <div class="ft-container">
+                                <div class="podcastt-time">00:00 / 00:00</div>
+                                <div class="podcastt-speed">
+                                    <a class="podcastt-speed-5" href="javascript:void(0)">0.5x</a> / <a
+                                        class="podcastt-speed-10 active" href="javascript:void(0)">1x</a> / <a
+                                        class="podcastt-speed-15" href="javascript:void(0)">1.5x</a> / <a
+                                        class="podcastt-speed-20" href="javascript:void(0)">2x</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="d72cafed-b059-410a-aabe-09d22b3f659c">
+                        <h4>1. What was the man thinking about when he was walking along the street?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">he was thinking that he is better than other
+                                    people</button></li>
+                            <li><button onclick="checkQuiz9(this)">he was thinking that he wants to visit his
+                                    parents</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>he was thinking that people who had much money
+                                    were never satisfied</button></li>
+                        </ul>
+                    </div>
+                    <div class="br"></div>
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="156b60a7-57d1-41b5-8979-c00651511fcd">
+                        <h4>2. What did Fortune offer the man? </h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)" true>Fortune offered to pour diamond into his
+                                    bag</button></li>
+                            <li><button onclick="checkQuiz9(this)">Fortune offered the man some work</button></li>
+                            <li><button onclick="checkQuiz9(this)">Fortune offered to help the man to earn some money
+                                </button></li>
+                        </ul>
+                    </div>
+                    <div class="br"></div>
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="d738c4ba-b14f-4f0c-803e-381a212804ee">
+                        <h4>3. What happened when Fortune did what it promised? </h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">The man thanked Fortune and was satisfied</button>
+                            </li>
+                            <li><button onclick="checkQuiz9(this)" true>The man wanted more and more, the bag slipped
+                                    and
+                                    diamonds became dust</button></li>
+                            <li><button onclick="checkQuiz9(this)">Fortune offered the man more money to pour into his
+                                    bag</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class='galery3' id='galery'>
+                <div class='galery_div3_1' id='galerydiv'>
+                    <h3>Прослушайте аудио и выберите правильный ответ</h3>
+                    <div class='audio-tts3838 audio-div' id='audio-tts'>
+                        <audio
+                            src="https://fs.getcourse.ru/fileservice/file/download/a/44237/sc/488/h/e36662f3966aa8e3724154801999e0f6.mp4"></audio>
+                        <div class="podcastt-container podcastt-container-one">
+                            <div class="ht-container">
+                                <div class="podcastt-playpause">
+                                </div>
+                                <div class="podcastt-title"></div>
+                            </div>
+                            <div class="podcastt-progress">
+                                <div id="progress-slider" class="podcastt-progress"></div>
+                            </div>
+                            <div class="ft-container">
+                                <div class="podcastt-time">00:00 / 00:00</div>
+                                <div class="podcastt-speed">
+                                    <a class="podcastt-speed-5" href="javascript:void(0)">0.5x</a> / <a
+                                        class="podcastt-speed-10 active" href="javascript:void(0)">1x</a> / <a
+                                        class="podcastt-speed-15" href="javascript:void(0)">1.5x</a> / <a
+                                        class="podcastt-speed-20" href="javascript:void(0)">2x</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="dc35a833-281d-432d-992d-13ac1dd834a5">
+                        <h4>1. When and where did Mrs Evans go to buy some ice cream?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">She went to the supermarket in the morning</button>
+                            </li>
+                            <li><button onclick="checkQuiz9(this)" true>She bought some ice cream during the usual
+                                    interval half-way a film at the cinema</button></li>
+                            <li><button onclick="checkQuiz9(this)">She went to the museum and bought some ice-cream
+                                    there</button></li>
+                        </ul>
+                    </div>
+
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="56ebccdc-109c-4393-b895-d2348ff8b9cf">
+                        <h4>2. Did she usually buy something in such situations?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)" true>no, but that time she was hot</button></li>
+                            <li><button onclick="checkQuiz9(this)">yes, because she was always hot</button></li>
+                            <li><button onclick="checkQuiz9(this)">no, but that time she wanted some ice-cream because
+                                    she wanted to feel like a child</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-wrapper">
+                <div class="progress" id="total-progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                        aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                </div>
+            </div>
+        </div>
+
+        {% elif test_name == "reading" %}
+        <div class="container nav-Reading" id="container-wrapper">
+            <div class='galery1' id='galery'>
+                <div class='galery_div1_1' id='galerydiv'>
+                    <h3>Текст 1</h3>
+
+                    <button type="button" class="btn btn-primary rounded-8" data-bs-toggle="modal"
+                        data-bs-target="#modalText1_1">
+                        Открыть текст
+                    </button>
+
+                    <div class="modal fade" tabindex="-1" id="modalText1_1" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-cutom-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Текст 1</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    It is July 24, 1970 - a hot summer day in the Bronx, New York. A lot of Puerto Rican
+                                    people live here and they are not all happy. But it is a good day for David and
+                                    Guadalupe Lopez and their daughters Lynda and Leslie. They are happy because they
+                                    have a new little girl in the family. They call her Jennifer.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Jennifer is beautiful and interesting. From four years old she performs for the
+                                    family. Sometimes she is a singer. Sometimes she is a dancer or a movie star. She
+                                    loves the movie West Side Story. She watches it one hundred times. In West Side
+                                    Story, Rita Moreno plays Anita. For Jennifer, Rita is America's number one actress
+                                    and dancer. "I'd like to be her," Jennifer thinks.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    At five, Jennifer goes to a school of theater and dance. In a short time, she can
+                                    sing, act, and dance very well.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    "But is this important?" David and Guadalupe ask. They have good jobs. They want to
+                                    see Jennifer in a good job, too. For this, schoolwork is very important.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Закрыть</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="br"></div>
+                    <div class="br"></div>
+
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="564188ee-afba-4940-85db-aedf213212a3">
+                        <h4>Why was July 24, 1970 a happy day for the family?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">They moved to another city</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>They had a new little girl on their
+                                    family</button>
+                            </li>
+                            <li><button onclick="checkQuiz9(this)">Their daughter got married</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class='galery2' id='galery'>
+                <div class='galery_div2_1' id='galerydiv'>
+                    <h3>Текст 1</h3>
+
+                    <button type="button" class="btn btn-primary rounded-8" data-bs-toggle="modal"
+                        data-bs-target="#modalText1_2">
+                        Открыть текст
+                    </button>
+
+                    <div class="modal fade" tabindex="-1" id="modalText1_2" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-cutom-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Текст 1</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    It is July 24, 1970 - a hot summer day in the Bronx, New York. A lot of Puerto Rican
+                                    people live here and they are not all happy. But it is a good day for David and
+                                    Guadalupe Lopez and their daughters Lynda and Leslie. They are happy because they
+                                    have a new little girl in the family. They call her Jennifer.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Jennifer is beautiful and interesting. From four years old she performs for the
+                                    family. Sometimes she is a singer. Sometimes she is a dancer or a movie star. She
+                                    loves the movie West Side Story. She watches it one hundred times. In West Side
+                                    Story, Rita Moreno plays Anita. For Jennifer, Rita is America's number one actress
+                                    and dancer. "I'd like to be her," Jennifer thinks.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    At five, Jennifer goes to a school of theater and dance. In a short time, she can
+                                    sing, act, and dance very well.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    "But is this important?" David and Guadalupe ask. They have good jobs. They want to
+                                    see Jennifer in a good job, too. For this, schoolwork is very important.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Закрыть</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="br"></div>
+                    <div class="br"></div>
+
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="250dcbab-cd69-4246-a774-e48aaf90d158">
+                        <h4>When did Jennifer start to perform for the family?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)" true>When she was four</button></li>
+                            <li><button onclick="checkQuiz9(this)">When started to study at school</button></li>
+                            <li><button onclick="checkQuiz9(this)">When she was six</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class='galery3' id='galery'>
+                <div class='galery_div3_1' id='galerydiv'>
+                    <h3>Текст 1</h3>
+
+                    <button type="button" class="btn btn-primary rounded-8" data-bs-toggle="modal"
+                        data-bs-target="#modalText1_3">
+                        Открыть текст
+                    </button>
+
+                    <div class="modal fade" tabindex="-1" id="modalText1_3" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-cutom-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Текст 1</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    It is July 24, 1970 - a hot summer day in the Bronx, New York. A lot of Puerto Rican
+                                    people live here and they are not all happy. But it is a good day for David and
+                                    Guadalupe Lopez and their daughters Lynda and Leslie. They are happy because they
+                                    have a new little girl in the family. They call her Jennifer.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Jennifer is beautiful and interesting. From four years old she performs for the
+                                    family. Sometimes she is a singer. Sometimes she is a dancer or a movie star. She
+                                    loves the movie West Side Story. She watches it one hundred times. In West Side
+                                    Story, Rita Moreno plays Anita. For Jennifer, Rita is America's number one actress
+                                    and dancer. "I'd like to be her," Jennifer thinks.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    At five, Jennifer goes to a school of theater and dance. In a short time, she can
+                                    sing, act, and dance very well.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    "But is this important?" David and Guadalupe ask. They have good jobs. They want to
+                                    see Jennifer in a good job, too. For this, schoolwork is very important.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Закрыть</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="br"></div>
+                    <div class="br"></div>
+
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="6d779d58-bf0d-4c95-ba03-d1f3629ba584">
+                        <h4>Why did Jennifer want to be Rita Moreno?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">Because she was beautiful</button></li>
+                            <li><button onclick="checkQuiz9(this)">Because she was America's number one singer</button>
+                            </li>
+                            <li><button onclick="checkQuiz9(this)" true>Because she was America's number one actress and
+                                    dancer</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery4' id='galery'>
+                <div class='galery_div4_1' id='galerydiv'>
+                    <h3>Текст 1</h3>
+
+                    <button type="button" class="btn btn-primary rounded-8" data-bs-toggle="modal"
+                        data-bs-target="#modalText1_4">
+                        Открыть текст
+                    </button>
+
+                    <div class="modal fade" tabindex="-1" id="modalText1_4" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-cutom-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Текст 1</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    It is July 24, 1970 - a hot summer day in the Bronx, New York. A lot of Puerto Rican
+                                    people live here and they are not all happy. But it is a good day for David and
+                                    Guadalupe Lopez and their daughters Lynda and Leslie. They are happy because they
+                                    have a new little girl in the family. They call her Jennifer.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Jennifer is beautiful and interesting. From four years old she performs for the
+                                    family. Sometimes she is a singer. Sometimes she is a dancer or a movie star. She
+                                    loves the movie West Side Story. She watches it one hundred times. In West Side
+                                    Story, Rita Moreno plays Anita. For Jennifer, Rita is America's number one actress
+                                    and dancer. "I'd like to be her," Jennifer thinks.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    At five, Jennifer goes to a school of theater and dance. In a short time, she can
+                                    sing, act, and dance very well.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    "But is this important?" David and Guadalupe ask. They have good jobs. They want to
+                                    see Jennifer in a good job, too. For this, schoolwork is very important.
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Закрыть</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="br"></div>
+                    <div class="br"></div>
+
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="8a0e93cf-d641-48fb-814f-e9a25508acdf">
+                        <h4>When could Jennifer sing and dance well?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)" true>In a short time after she started to study at
+                                    school of theatre and dance</button></li>
+                            <li><button onclick="checkQuiz9(this)">When she was five and started to take classes with a
+                                    coach</button></li>
+                            <li><button onclick="checkQuiz9(this)">Soon after she was five and spent a lot of time
+                                    dancing at home</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class='galery6' id='galery'>
+                <div class='galery_div6_1' id='galerydiv'>
+                    <h3>Текст 2</h3>
+
+                    <button type="button" class="btn btn-primary rounded-8" data-bs-toggle="modal"
+                        data-bs-target="#modalText2_1">
+                        Открыть текст
+                    </button>
+
+                    <div class="modal fade" tabindex="-1" id="modalText2_1" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-cutom-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Текст 2</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    I was at the hospital for two months. After the first few weeks my leg was getting
+                                    better, and one day I went down into the little town, to the fish market. I bought
+                                    some shrimps, and one of the cooks at the hospital cooked them for me. Two days
+                                    later, I went back to the fish market and talked to a man who was selling shrimps.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    'Where do you get them?' I asked him.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    He immediately started talking fast in a language that I couldn't understand, but he
+                                    took me somewhere - past all the boats and the beach. There he took a net and put it
+                                    in the water. When he took it out again, it was full of shrimps!
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Every day for the next few weeks, I went with Mr Chi (that was his name) and watched
+                                    him while he worked. He showed me how to catch shrimps with the net, and it was so
+                                    easy that an idiot was able to do it!
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Which I did!
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Then one day I got back to the hospital and a Colonel Gooch said, 'Gump, we're going
+                                    back to America together! You're going to see the President of the United States,
+                                    and he's going to give you a medal because you were very brave.'
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Закрыть</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="br"></div>
+                    <div class="br"></div>
+
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="740fe8fd-1c60-4f0a-8da4-46c0c044ae3b">
+                        <h4>When did the narrator go to the fish market? </h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)" true>After the first few weeks since he got to
+                                    hospital</button></li>
+                            <li><button onclick="checkQuiz9(this)">In two months</button></li>
+                            <li><button onclick="checkQuiz9(this)">At the end of his time in hospital</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class='galery7' id='galery'>
+                <div class='galery_div7_1' id='galerydiv'>
+                    <h3>Текст 2</h3>
+
+                    <button type="button" class="btn btn-primary rounded-8" data-bs-toggle="modal"
+                        data-bs-target="#modalText2_2">
+                        Открыть текст
+                    </button>
+
+                    <div class="modal fade" tabindex="-1" id="modalText2_2" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-cutom-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Текст 2</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    I was at the hospital for two months. After the first few weeks my leg was getting
+                                    better, and one day I went down into the little town, to the fish market. I bought
+                                    some shrimps, and one of the cooks at the hospital cooked them for me. Two days
+                                    later, I went back to the fish market and talked to a man who was selling shrimps.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    'Where do you get them?' I asked him.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    He immediately started talking fast in a language that I couldn't understand, but he
+                                    took me somewhere - past all the boats and the beach. There he took a net and put it
+                                    in the water. When he took it out again, it was full of shrimps!
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Every day for the next few weeks, I went with Mr Chi (that was his name) and watched
+                                    him while he worked. He showed me how to catch shrimps with the net, and it was so
+                                    easy that an idiot was able to do it!
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Which I did!
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Then one day I got back to the hospital and a Colonel Gooch said, 'Gump, we're going
+                                    back to America together! You're going to see the President of the United States,
+                                    and he's going to give you a medal because you were very brave.'
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Закрыть</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="br"></div>
+                    <div class="br"></div>
+
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="481cf792-2f8b-4114-9f31-ef12aa280549">
+                        <h4>Who cooked shrimps for the narrator?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">He himself</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>A cook at the hospita</button></li>
+                            <li><button onclick="checkQuiz9(this)">Some man on a beach</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class='galery8' id='galery'>
+                <div class='galery_div8_1' id='galerydiv'>
+                    <h3>Текст 2 </h3>
+
+                    <button type="button" class="btn btn-primary rounded-8" data-bs-toggle="modal"
+                        data-bs-target="#modalText2_3">
+                        Открыть текст
+                    </button>
+
+                    <div class="modal fade" tabindex="-1" id="modalText2_3" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-cutom-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Текст 2</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    I was at the hospital for two months. After the first few weeks my leg was getting
+                                    better, and one day I went down into the little town, to the fish market. I bought
+                                    some shrimps, and one of the cooks at the hospital cooked them for me. Two days
+                                    later, I went back to the fish market and talked to a man who was selling shrimps.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    'Where do you get them?' I asked him.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    He immediately started talking fast in a language that I couldn't understand, but he
+                                    took me somewhere - past all the boats and the beach. There he took a net and put it
+                                    in the water. When he took it out again, it was full of shrimps!
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Every day for the next few weeks, I went with Mr Chi (that was his name) and watched
+                                    him while he worked. He showed me how to catch shrimps with the net, and it was so
+                                    easy that an idiot was able to do it!
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Which I did!
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Then one day I got back to the hospital and a Colonel Gooch said, 'Gump, we're going
+                                    back to America together! You're going to see the President of the United States,
+                                    and he's going to give you a medal because you were very brave.'
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Закрыть</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="br"></div>
+                    <div class="br"></div>
+
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="95546b49-312d-4e7a-b431-6f5d7b3592ab">
+                        <h4> Who showed the narrator a place with shrimps?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">The cook</button></li>
+                            <li><button onclick="checkQuiz9(this)">Some man from the beach</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>The seller of the shrimps</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class='galery9' id='galery'>
+                <div class='galery_div9_1' id='galerydiv'>
+                    <h3>Текст 2</h3>
+
+                    <button type="button" class="btn btn-primary rounded-8" data-bs-toggle="modal"
+                        data-bs-target="#modalText2_5">
+                        Открыть текст
+                    </button>
+
+                    <div class="modal fade" tabindex="-1" id="modalText2_5" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-cutom-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Текст 2</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    I was at the hospital for two months. After the first few weeks my leg was getting
+                                    better, and one day I went down into the little town, to the fish market. I bought
+                                    some shrimps, and one of the cooks at the hospital cooked them for me. Two days
+                                    later, I went back to the fish market and talked to a man who was selling shrimps.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    'Where do you get them?' I asked him.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    He immediately started talking fast in a language that I couldn't understand, but he
+                                    took me somewhere - past all the boats and the beach. There he took a net and put it
+                                    in the water. When he took it out again, it was full of shrimps!
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Every day for the next few weeks, I went with Mr Chi (that was his name) and watched
+                                    him while he worked. He showed me how to catch shrimps with the net, and it was so
+                                    easy that an idiot was able to do it!
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Which I did!
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Then one day I got back to the hospital and a Colonel Gooch said, 'Gump, we're going
+                                    back to America together! You're going to see the President of the United States,
+                                    and he's going to give you a medal because you were very brave.'
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Закрыть</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="br"></div>
+                    <div class="br"></div>
+
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="a6eca531-3924-4bc5-811b-b3710abd39af">
+                        <h4>What did the narrator do every day for the next few weeks?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)" true>He went to the beach to see how the seller
+                                    caught shrimps</button></li>
+                            <li><button onclick="checkQuiz9(this)">He bought shrimps and cooked them</button></li>
+                            <li><button onclick="checkQuiz9(this)">He went away from the hospital and went to
+                                    work</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class='galery11' id='galery'>
+                <div class='galery_div11_1' id='galerydiv'>
+                    <h3>Текст 3</h3>
+
+                    <button type="button" class="btn btn-primary rounded-8" data-bs-toggle="modal"
+                        data-bs-target="#modalText3_1">
+                        Открыть текст
+                    </button>
+
+                    <div class="modal fade" tabindex="-1" id="modalText3_1" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-cutom-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Текст 3</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    The Internet has already entered our ordinary life. Everybody knows that the
+                                    Internet is a global computer network, which embraces hundred of millions of users
+                                    all over the world and helps us to communicate with each other.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    The history of Internet began in the United States in 1969.
+                                    <div class="br"></div>
+                                    It was a military experiment, designed to help to survive during a nuclear war, when
+                                    everything around might be polluted by radiation and it would be dangerous to get
+                                    out for any living being to get some information to anywhere.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Information sent over the Internet takes the shortest and safest path available from
+                                    one computer to another.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Because of this, any two computers on the net will be able to stay in touch with
+                                    each other as long as there is a single route between them. This technology was
+                                    called packet switching.
+                                    <div class="br"></div>
+                                    Invention of modems, special devices allowing your computer to send the information
+                                    through the telephone line, has opened doors to the Internet for millions of people.
+                                    Most of the Internet host computers are in the United States of America. It is clear
+                                    that the accurate number of users can be counted approximately, nobody knows exactly
+                                    how many people use the Internet today, because there are hundred of millions of
+                                    users and their number is growing every single day.
+                                    <div class="br"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Закрыть</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="br"></div>
+                    <div class="br"></div>
+
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="6111bf72-0416-404e-97f6-088b066d6d30">
+                        <h4>Where did the history of the Internet begin?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)" true>In the USA</button></li>
+                            <li><button onclick="checkQuiz9(this)">In Japan</button></li>
+                            <li><button onclick="checkQuiz9(this)">In England</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class='galery12' id='galery'>
+                <div class='galery_div12_1' id='galerydiv'>
+                    <h3>Текст 3</h3>
+
+                    <button type="button" class="btn btn-primary rounded-8" data-bs-toggle="modal"
+                        data-bs-target="#modalText3_2">
+                        Открыть текст
+                    </button>
+
+                    <div class="modal fade" tabindex="-1" id="modalText3_2" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-cutom-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Текст 3</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    The Internet has already entered our ordinary life. Everybody knows that the
+                                    Internet is a global computer network, which embraces hundred of millions of users
+                                    all over the world and helps us to communicate with each other.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    The history of Internet began in the United States in 1969.
+                                    <div class="br"></div>
+                                    It was a military experiment, designed to help to survive during a nuclear war, when
+                                    everything around might be polluted by radiation and it would be dangerous to get
+                                    out for any living being to get some information to anywhere.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Information sent over the Internet takes the shortest and safest path available from
+                                    one computer to another.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Because of this, any two computers on the net will be able to stay in touch with
+                                    each other as long as there is a single route between them. This technology was
+                                    called packet switching.
+                                    <div class="br"></div>
+                                    Invention of modems, special devices allowing your computer to send the information
+                                    through the telephone line, has opened doors to the Internet for millions of people.
+                                    Most of the Internet host computers are in the United States of America. It is clear
+                                    that the accurate number of users can be counted approximately, nobody knows exactly
+                                    how many people use the Internet today, because there are hundred of millions of
+                                    users and their number is growing every single day.
+                                    <div class="br"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Закрыть</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="br"></div>
+                    <div class="br"></div>
+
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="5bd416af-b487-4c69-896b-d60cc5293bcc">
+                        <h4>How did the Internet start?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">One man invented the Internet at home</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>It started as a a military experiment, designed
+                                    to help to survive during a nuclear war</button></li>
+                            <li><button onclick="checkQuiz9(this)">A team of specialists accidentally invented the
+                                    Internet in a laboratory</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class='galery13' id='galery'>
+                <div class='galery_div13_1' id='galerydiv'>
+                    <h3>Текст 3</h3>
+
+                    <button type="button" class="btn btn-primary rounded-8" data-bs-toggle="modal"
+                        data-bs-target="#modalText3_3">
+                        Открыть текст
+                    </button>
+
+                    <div class="modal fade" tabindex="-1" id="modalText3_3" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-cutom-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Текст 3</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    The Internet has already entered our ordinary life. Everybody knows that the
+                                    Internet is a global computer network, which embraces hundred of millions of users
+                                    all over the world and helps us to communicate with each other.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    The history of Internet began in the United States in 1969.
+                                    <div class="br"></div>
+                                    It was a military experiment, designed to help to survive during a nuclear war, when
+                                    everything around might be polluted by radiation and it would be dangerous to get
+                                    out for any living being to get some information to anywhere.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Information sent over the Internet takes the shortest and safest path available from
+                                    one computer to another.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Because of this, any two computers on the net will be able to stay in touch with
+                                    each other as long as there is a single route between them. This technology was
+                                    called packet switching.
+                                    <div class="br"></div>
+                                    Invention of modems, special devices allowing your computer to send the information
+                                    through the telephone line, has opened doors to the Internet for millions of people.
+                                    Most of the Internet host computers are in the United States of America. It is clear
+                                    that the accurate number of users can be counted approximately, nobody knows exactly
+                                    how many people use the Internet today, because there are hundred of millions of
+                                    users and their number is growing every single day.
+                                    <div class="br"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Закрыть</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="br"></div>
+                    <div class="br"></div>
+
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="1d9b6a7c-2cb7-4017-8058-65bdb8950c13">
+                        <h4>What was the main goal of the Internet?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">To save important information</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>To sent information from one computer to
+                                    another</button></li>
+                            <li><button onclick="checkQuiz9(this)">To invent complex programs to help people</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class='galery14' id='galery'>
+                <div class='galery_div14_1' id='galerydiv'>
+                    <h3>Текст 3</h3>
+
+                    <button type="button" class="btn btn-primary rounded-8" data-bs-toggle="modal"
+                        data-bs-target="#modalText3_4">
+                        Открыть текст
+                    </button>
+
+                    <div class="modal fade" tabindex="-1" id="modalText3_4" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-cutom-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Текст 3</h5>
+                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    The Internet has already entered our ordinary life. Everybody knows that the
+                                    Internet is a global computer network, which embraces hundred of millions of users
+                                    all over the world and helps us to communicate with each other.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    The history of Internet began in the United States in 1969.
+                                    <div class="br"></div>
+                                    It was a military experiment, designed to help to survive during a nuclear war, when
+                                    everything around might be polluted by radiation and it would be dangerous to get
+                                    out for any living being to get some information to anywhere.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Information sent over the Internet takes the shortest and safest path available from
+                                    one computer to another.
+                                    <div class="br"></div>
+                                    <div class="br"></div>
+                                    Because of this, any two computers on the net will be able to stay in touch with
+                                    each other as long as there is a single route between them. This technology was
+                                    called packet switching.
+                                    <div class="br"></div>
+                                    Invention of modems, special devices allowing your computer to send the information
+                                    through the telephone line, has opened doors to the Internet for millions of people.
+                                    Most of the Internet host computers are in the United States of America. It is clear
+                                    that the accurate number of users can be counted approximately, nobody knows exactly
+                                    how many people use the Internet today, because there are hundred of millions of
+                                    users and their number is growing every single day.
+                                    <div class="br"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Закрыть</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="br"></div>
+                    <div class="br"></div>
+
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="bdfdf157-1cd1-4458-b620-6b9e131d478f">
+                        <h4>Why the number of the Internet users can’t be counted?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)" true>Because the number of users is growing every
+                                    day</button></li>
+                            <li><button onclick="checkQuiz9(this)">Nobody wants to count</button></li>
+                            <li><button onclick="checkQuiz9(this)">Because there are a lot of people who have several
+                                    computers at home</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="progress-wrapper">
+                <div class="progress" id="total-progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                        aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                </div>
+            </div>
+        </div>
+
+        {% elif test_name == "grammar" %}
+        <div class="container nav-Grammar" id="container-wrapper">
+            <div class="br"></div>
+            <div class="br"></div>
+            <div class="br"></div>
+            <div class='galery1' id='galery'>
+                <div class='galery_div1_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper1_2_1" id="quiz9-wrapper"
+                        quiz-uuid="77fdc47b-c7b8-4671-91c2-a3e7861ec8a0">
+                        <h4>I _____ her last week</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">meet</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>met</button></li>
+                            <li><button onclick="checkQuiz9(this)">meets</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery2' id='galery'>
+                <div class='galery_div2_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper2_2_1" id="quiz9-wrapper"
+                        quiz-uuid="32bf7253-1020-4684-bdd5-27e19f648ce8">
+                        <h4>They _______ this on the phone now</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">discuss</button></li>
+                            <li><button onclick="checkQuiz9(this)">discusses</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>are discussing</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery3' id='galery'>
+                <div class='galery_div3_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper3_2_1" id="quiz9-wrapper"
+                        quiz-uuid="ff022c98-031a-4ca9-bc04-868247356555">
+                        <h4>What book _____ it?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)" true>is</button></li>
+                            <li><button onclick="checkQuiz9(this)">are</button></li>
+                            <li><button onclick="checkQuiz9(this)">does</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery4' id='galery'>
+                <div class='galery_div4_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="912e2e8a-c3e5-458c-b095-1f486c7124aa">
+                        <h4>What _____ she prefer</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">do</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>does</button></li>
+                            <li><button onclick="checkQuiz9(this)">have</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery5' id='galery'>
+                <div class='galery_div5_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper5_2_1" id="quiz9-wrapper"
+                        quiz-uuid="0536d4c2-cad8-431c-8ce9-0e1bae1b05b8">
+                        <h4>She _______ red roses</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">hate</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>hates</button></li>
+                            <li><button onclick="checkQuiz9(this)">is hate</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery6' id='galery'>
+                <div class='galery_div6_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper6_2_1" id="quiz9-wrapper"
+                        quiz-uuid="7c554917-5467-40ea-b83c-f1aedc3a95a5">
+                        <h4>Have you ever been _______ Amsterdam?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">in</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>to</button></li>
+                            <li><button onclick="checkQuiz9(this)">at</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery7' id='galery'>
+                <div class='galery_div7_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper7_2_1" id="quiz9-wrapper"
+                        quiz-uuid="a57401ac-0204-4d96-98d0-838f2b720096">
+                        <h4>How long _______ you _______ here?</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">do / work</button></li>
+                            <li><button onclick="checkQuiz9(this)">are / working</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>have / been working</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery8' id='galery'>
+                <div class='galery_div8_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper8_2_1" id="quiz9-wrapper"
+                        quiz-uuid="94eae396-df5d-4cc6-b673-ede97935dd1d">
+                        <h4>Tomorrow at this time I _______ to Russia</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">will fly</button></li>
+                            <li><button onclick="checkQuiz9(this)">will have flown</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>will be flying</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery9' id='galery'>
+                <div class='galery_div9_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper9_2_1" id="quiz9-wrapper"
+                        quiz-uuid="d022e44d-5bff-4d35-b117-d81791da0379">
+                        <h4>She pushed the documents ______ the table</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">through</button></li>
+                            <li><button onclick="checkQuiz9(this)">over</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>across</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery10' id='galery'>
+                <div class='galery_div10_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper10_2_1" id="quiz9-wrapper"
+                        quiz-uuid="49c7e085-278c-4b19-85a1-90bed5ef1f62">
+                        <h4>I _______ always _______ about it (меня всегда спрашивают об этом)</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">am / being asked</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>am / asked</button></li>
+                            <li><button onclick="checkQuiz9(this)">have / been asked</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery100' id='galery'>
+                <div class='galery_div100_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper100_2_1" id="quiz9-wrapper"
+                        quiz-uuid="c0ff1438-9d57-4d9a-b2a7-86cb1e2934c3">
+                        <h4>She ______for (Её ищут)</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)" true>is being looked</button></li>
+                            <li><button onclick="checkQuiz9(this)">looked</button></li>
+                            <li><button onclick="checkQuiz9(this)">is looked</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery11' id='galery'>
+                <div class='galery_div11_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper11_2_1" id="quiz9-wrapper"
+                        quiz-uuid="7d16a43b-9365-46ff-8cb0-5545e14b2ac0">
+                        <h4>Last week the reason of the accident _______ (на прошлой неделе причина аварии была
+                            установлена)</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">found</button></li>
+                            <li><button onclick="checkQuiz9(this)">has been found</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>was found</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery12' id='galery'>
+                <div class='galery_div12_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper12_2_1" id="quiz9-wrapper"
+                        quiz-uuid="6583d206-d791-4796-855c-b74a723d8d55">
+                        <h4>I can’t help _______ at him (я не могу не смотреть на него)</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)" true>looking</button></li>
+                            <li><button onclick="checkQuiz9(this)">to look</button></li>
+                            <li><button onclick="checkQuiz9(this)">look</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery13' id='galery'>
+                <div class='galery_div13_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper13_2_1" id="quiz9-wrapper"
+                        quiz-uuid="efed5002-8090-4a28-9665-8045fbb8ff4d">
+                        <h4>My mum _______ me to help her</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">said</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>told</button></li>
+                            <li><button onclick="checkQuiz9(this)">talked</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery14' id='galery'>
+                <div class='galery_div14_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper14_2_1" id="quiz9-wrapper"
+                        quiz-uuid="9aaa76c8-9d30-4808-982b-0a752e5d34a3">
+                        <h4>We would rather she _______ yesterday (мы бы предпочли, чтобы она осталась вчера)</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">stayed</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>had stayed</button></li>
+                            <li><button onclick="checkQuiz9(this)">stay</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery15' id='galery'>
+                <div class='galery_div15_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper15_2_1" id="quiz9-wrapper"
+                        quiz-uuid="8cabb0bb-22c4-4f0c-b0e7-478ac9683166">
+                        <h4>They had better ___ the truth (Им бы лучше сказать правду)</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)" true>tell</button></li>
+                            <li><button onclick="checkQuiz9(this)">telling</button></li>
+                            <li><button onclick="checkQuiz9(this)">had told</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery16' id='galery'>
+                <div class='galery_div16_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper16_2_1" id="quiz9-wrapper"
+                        quiz-uuid="5ff7bd63-cd59-4852-b205-c8fa711d9390">
+                        <h4>You _______ listen to your parents (ты должен слушать родителей)</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">should</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>must</button></li>
+                            <li><button onclick="checkQuiz9(this)">have to</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery17' id='galery'>
+                <div class='galery_div17_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper17_2_1" id="quiz9-wrapper"
+                        quiz-uuid="05c1f280-6b0d-41d6-98e9-89494b8ee1e2">
+                        <h4>Yesterday you _______ come</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)" true>didn't have to</button></li>
+                            <li><button onclick="checkQuiz9(this)">hadn't to</button></li>
+                            <li><button onclick="checkQuiz9(this)">didn't has to</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery18' id='galery'>
+                <div class='galery_div18_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper18_2_1" id="quiz9-wrapper"
+                        quiz-uuid="0ff84b7e-f277-4e56-bc58-244c229a2813">
+                        <h4>If I _______ you, I _______ in another way</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)" true>were / would behave</button></li>
+                            <li><button onclick="checkQuiz9(this)">was / behaved</button></li>
+                            <li><button onclick="checkQuiz9(this)">were / will behave</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery19' id='galery'>
+                <div class='galery_div19_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper19_2_1" id="quiz9-wrapper"
+                        quiz-uuid="24ecbc24-0b31-453c-9f59-56c36f0cc117">
+                        <h4>She _______ the party yesterday if you _______ her</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">wouldn't leave / didn't hurt</button></li>
+                            <li><button onclick="checkQuiz9(this)">hadn't left / wouldn't have hurt</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>wouldn't have left / hadn't hurt</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery20' id='galery'>
+                <div class='galery_div20_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper20_2_1" id="quiz9-wrapper"
+                        quiz-uuid="d8f11e93-203d-4306-90d8-3f3b9dc4a8e8">
+                        <h4>I want you _______</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">leave</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>to leave</button></li>
+                            <li><button onclick="checkQuiz9(this)">leaving</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery21' id='galery'>
+                <div class='galery_div21_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper21_2_1" id="quiz9-wrapper"
+                        quiz-uuid="c57d7178-ba46-4e2d-8706-432e2aeb9a1a">
+                        <h4>I won't let you _______ this</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)" true>do</button></li>
+                            <li><button onclick="checkQuiz9(this)">to do</button></li>
+                            <li><button onclick="checkQuiz9(this)">doing</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery22' id='galery'>
+                <div class='galery_div22_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper22_2_1" id="quiz9-wrapper"
+                        quiz-uuid="12acc7c4-9e02-4f73-8c1c-9763334c1144">
+                        <h4>She is expected _______ tomorrow (ожидают, что она приедет завтра)</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">come</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>to come</button></li>
+                            <li><button onclick="checkQuiz9(this)">coming</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery23' id='galery'>
+                <div class='galery_div23_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper23_2_1" id="quiz9-wrapper"
+                        quiz-uuid="65668315-1088-4649-b43a-546df7cbd32d">
+                        <h4>The picture is said _______ (говорят, картину украли)</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">to steal</button></li>
+                            <li><button onclick="checkQuiz9(this)">to be stolen</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>to have been stolen</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery24' id='galery'>
+                <div class='galery_div24_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper24_2_1" id="quiz9-wrapper"
+                        quiz-uuid="0a61324c-7896-4ab1-8377-bddb5423e9ab">
+                        <h4>_______ that she was far away I decided to leave that place (понимая, что она далеко, я
+                            решил покинуть то место)</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)" true>Understanding</button></li>
+                            <li><button onclick="checkQuiz9(this)">Being understood</button></li>
+                            <li><button onclick="checkQuiz9(this)">Having been understood</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class='galery25' id='galery'>
+                <div class='galery_div25_1' id='galerydiv'>
+                    <div class="type2 quiz-wrapper25_2_1" id="quiz9-wrapper"
+                        quiz-uuid="ebdbdbe0-4779-471a-9bef-41df5ad24982">
+                        <h4>_______ my task I went to sleep (выполнив задание, я пошел спать)</h4>
+                        <ul>
+                            <li><button onclick="checkQuiz9(this)">Doing</button></li>
+                            <li><button onclick="checkQuiz9(this)" true>Having done</button></li>
+                            <li><button onclick="checkQuiz9(this)">Having been done</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="progress-wrapper">
+                <div class="progress" id="total-progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                        aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                </div>
+            </div>
+        </div>
+
+        {% elif test_name == "vocabulary" %}
+        <div class="container nav-Vocabulary" id="container-wrapper">
+            <div class='galery1' id='galery'>
+                <div class='galery_div1_1' id='galerydiv'>
+                    <h3>Прочитайте текст. Заполните пропуски</h3>
+                    <div class="br"></div>
+                    <h3>Текст 1</h3>
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span>One day, in a big house in Brussels, Belgium, a man</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="aaa30775-fb4d-4dc9-899c-825b1800468c">
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">grab</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">dropped</button>
+                                <button type="button" class="dropdown-item" true
+                                    onclick="setAnswerDropwown(this)">took</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">pleased</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">не
+                                    знаю</button>
+                            </div>
+                        </div>
+                        <span> his daughter in his arms. Little Audrey Hepburn </span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="e2f2eab2-80f7-4b58-97ec-f1be8d86f3eb">
+                                <button type="button" class="dropdown-item" true
+                                    onclick="setAnswerDropwown(this)">looked up</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">looked
+                                    down</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">looked
+                                    out</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">looked
+                                    after</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">не
+                                    знаю</button>
+                            </div>
+                        </div>
+                        <span> and saw some beautiful lights </span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="f3977098-ca95-4c55-8658-3501abd8621b">
+                                <input type="text" trueanswer="above">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span> her </span><span class="text-highlighted">(над ней)</span><span> . They were as white as
+                            snow. She</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="645625dc-32e7-4e69-9309-6a323be5cf7f">
+                                <input type="text" trueanswer="remembered">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(вспоминала)</span> <span>those lights all her life. She always
+                            loved
+                            the color white. She saw white and remembered her father. Then she felt</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="7843f561-26f3-4dfb-976d-c02b8350a466">
+                                <input type="text" trueanswer="safe">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(чувствовала себя в безопасности)</span><span> and warm.</span>
+                        <div class="br"></div>
+                        <div class="br"></div>
+                        <span>Audrey Hepburn-Ruston was born in Brussels on May 4, 1929.
+                            Her mother, Baroness Ella van Heemstra, was Dutch. Her father, Joseph, was half English,
+                            half Irish. He worked for many
+                        </span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="e1193719-76da-475e-a414-1542f6b06d56">
+                                <input type="text" trueanswer="companies">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(на многие компании)</span><span> and </span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="2b45743b-ae7c-4111-9e8b-c39111d3be1b">
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">stole</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">put</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">lost</button>
+                                <button type="button" class="dropdown-item" true
+                                    onclick="setAnswerDropwown(this)">earn</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">не
+                                    знаю</button>
+                            </div>
+                        </div>
+                        <span> a lot of money. </span>
+                        <div class="br"></div>
+                        <div class="br"></div>
+                        <span>Young Audrey</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="cb2944e0-cc0e-4333-aa2f-4348692e02aa">
+                                <button type="button" class="dropdown-item" true
+                                    onclick="setAnswerDropwown(this)">enjoyed</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">played</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">finished</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">understood</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">не
+                                    знаю</button>
+                            </div>
+                        </div>
+                        <span> reading and loved animals and birds. But her greatest </span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="01392f06-c917-4d33-8f69-40653aa7665f">
+                                <input type="text" trueanswer="love">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(любовь)</span> <span> was music. "What's music?" Audrey asked
+                            her
+                            mother one day. "It's for dancing," her mother answered. </span>
+                        <div class="br"></div>
+                        <div class="br"></div>
+                        <span>Audrey wanted to be a dancer, but she was unhappy. "I'm too fat," she thought. "Dancers
+                            are</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="e3cb54de-12d1-4ee6-8fef-249a56bb844f">
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">young</button>
+                                <button type="button" class="dropdown-item" true
+                                    onclick="setAnswerDropwown(this)">thin</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">tall</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">confident</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">не
+                                    знаю</button>
+                            </div>
+                        </div>
+                        <span> and </span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="f693f61f-fcd4-4818-ad74-c8e97e896856">
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">small</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">skinny</button>
+                                <button type="button" class="dropdown-item" true
+                                    onclick="setAnswerDropwown(this)">pretty</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">confident</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">не
+                                    знаю</button>
+                            </div>
+                        </div>
+                        <span> , but my face is too round and my legs are too big."
+                        </span>
+                        <div class="br"></div>
+                        <div class="br"></div>
+                        <span>Her parents were unhappy too. They often </span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="69410109-05f7-40db-adc9-ec298ebd8ecc">
+                                <button type="button" class="dropdown-item" true
+                                    onclick="setAnswerDropwown(this)">swore</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">explained</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">lost</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">delayed</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">не
+                                    знаю</button>
+                            </div>
+                        </div>
+                        <span>. One night her mother and father had a big fight. When Audrey woke up the next morning,
+                            her father was not there. Audrey cried for days.
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class='galery2' id='galery'>
+                <div class='galery_div2_1' id='galerydiv'>
+                    <h3>Прочитайте текст. Заполните пропуски</h3>
+                    <div class="br"></div>
+                    <h3>Текст 2</h3>
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span>I feel</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="d4753fb3-0266-495e-9d7f-cbbe6d03fba3">
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">confident</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">happy</button>
+                                <button type="button" class="dropdown-item" true
+                                    onclick="setAnswerDropwown(this)">different</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">nervous</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">не
+                                    знаю</button>
+                            </div>
+                        </div>
+                        <span> every day.</span>
+                        <div class="br"></div>
+                        <span> This</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="9563de18-2ce4-4dce-922f-f940b0fbe6c7">
+                                <input type="text" trueanswer="depends on">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(зависит)</span><span> my family and work. I am happy and</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="21e0fff2-6fcd-4f54-bf85-938457a4d937">
+                                <input type="text" trueanswer="pleased|satisfied|glad">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(довольна)</span><span> when my children come home with good
+                            grades.
+                        </span>
+                        <div class="br"></div>
+                        <span>I am</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="2b7d82bd-fb34-41e1-945c-334296bb3a02">
+                                <input type="text" trueanswer="delighted|thrilled">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(в восторге)</span><span> when my husband has time for us and we
+                            can</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="f305245b-f5ca-440f-9ade-359a95f93804">
+                                <input type="text" trueanswer="go out">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(выйти куда-то)</span>
+                        <div class="br"></div>
+                        <span>I am very enthusiastic when my boss</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="a894387c-1de7-47d7-a062-12806885bad8">
+                                <button type="button" class="dropdown-item" true
+                                    onclick="setAnswerDropwown(this)">praises</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">swears</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">scolds</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">hates</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">не
+                                    знаю</button>
+                            </div>
+                        </div>
+                        <span> me for all the work I have done.</span>
+                        <div class="br"></div>
+                        <span>Nevertheless, I am sometimes</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="8a9e44ab-7bf6-4ec1-adf7-8624daeabb31">
+                                <input type="text" trueanswer="embarrassed|perplexed|confused">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(растеряна)</span><span> when I do not know what to do or what to
+                            say.</span>
+                        <div class="br"></div>
+                        <span> Or I can be nervous before an </span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="ecaf29bf-6cd1-41d5-ab92-a07095af3511">
+                                <input type="text" trueanswer="important|significant">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(важный)</span><span> meeting in the office.</span>
+                        <div class="br"></div>
+                        <span>I</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="f124ad56-4347-4cee-a692-2908f24c4a7e">
+                                <input type="text" trueanswer="hate|detest">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(ненавижу)</span><span> being lonely and unhappy. </span>
+                        <div class="br"></div>
+                        <span>That is why I listen to good music and read interesting books when I want to get
+                            enthusiastic and</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="afc7813b-ce79-4969-b1ea-41b6eb58ef01">
+                                <button type="button" class="dropdown-item" true
+                                    onclick="setAnswerDropwown(this)">cheerful</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">fear</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">honest</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">reason</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">не
+                                    знаю</button>
+                            </div>
+                        </div>
+                        <span> When my son is sad, I cook something tasty for him. </span>
+                        <div class="br"></div>
+                        <span>He looks so</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="d2e9f885-5963-4606-993f-4fc4b7f9978f">
+                                <input type="text" trueanswer="fascinated|delighted">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(восхищенный)</span><span> when I make such a surprise for
+                            him!</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class='galery3' id='galery'>
+                <div class='galery_div3_1' id='galerydiv'>
+                    <h3>Прочитайте текст. Заполните пропуски</h3>
+                    <div class="br"></div>
+                    <h3>Текст 3</h3>
+                    <div class="br"></div>
+                    <div class="dropdown-wrapper">
+                        <span>Computer is an</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="28eb724e-eaef-4351-bdc4-b6c4c09b74cd">
+                                <input type="text" trueanswer="electronic">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(электронное)</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="319ad3f9-ee8b-4397-9ff0-5fb203af5030">
+                                <input type="text" trueanswer="device">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(устройство)</span><span> that can </span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="fd77f9cf-6558-4635-9f21-5886709e27cf">
+                                <input type="text" trueanswer="receive|get">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(получать)</span><span> a set of instructions called program and
+                            then </span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="619b31d4-9e5f-497f-abaf-9a9036fd11a8">
+                                <button type="button" class="dropdown-item" true onclick="setAnswerDropwown(this)">carry
+                                    out</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">carry
+                                    up</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">carry
+                                    over</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">carry
+                                    on</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">не
+                                    знаю</button>
+                            </div>
+                        </div>
+                        <span>them.</span>
+                        <div class="br"></div>
+                        <span>The modern world of high technology could not be</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="56872def-a49f-4a68-9ddc-e56985d34054">
+                                <input type="text" trueanswer="possible">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(возможен)</span> <span> without computers.</span>
+                        <div class="br"></div>
+                        <span>Different types and sizes of computers find uses in our society. </span>
+                        <div class="br"></div>
+                        <span>They are used for the</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="915eab85-943d-426a-8b45-8cdff28b1460">
+                                <input type="text" trueanswer="storage">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(хранение)</span><span> and handling of data, secret
+                            governmental
+                            files, information about banking transactions and so on. </span>
+                        <div class="br"></div>
+                        <span>Computers have opened up a new era in manufacturing and they have</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="a4c7dd55-8e69-45d6-a8cb-31d49e1edbd4">
+                                <input type="text" trueanswer="improved">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(улучшили)</span><span> modern communication systems. </span>
+                        <div class="br"></div>
+                        <span>They are</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="eb80a6ea-047b-47fe-89c2-c02c1582133a">
+                                <button type="button" class="dropdown-item" true
+                                    onclick="setAnswerDropwown(this)">essential</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">waste</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">demanding</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">useful</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">не
+                                    знаю</button>
+                            </div>
+                        </div>
+                        <span>tools in almost every field of</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="be608b25-974c-40b0-abf6-ae46e2f265e9">
+                                <input type="text" trueanswer="research">
+                                <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                            </div>
+                        </div>
+                        <span class="text-highlighted">(исследование)</span><span> , from constructing models of the
+                            universe to producing tomorrow's weather reports.
+                            Using of different databases and computer networks make</span>
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                ___
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="9fc3bdbd-2e96-4471-a5e2-c2457beaa53e">
+                                <button type="button" class="dropdown-item" true
+                                    onclick="setAnswerDropwown(this)">accessible</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">banned</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">completed</button>
+                                <button type="button" class="dropdown-item"
+                                    onclick="setAnswerDropwown(this)">honorable</button>
+                                <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">не
+                                    знаю</button>
+                            </div>
+                        </div>
+                        <span> a great variety of information sources.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-wrapper">
+                <div class="progress" id="total-progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                        aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
+    </div>
+</div>
+
+
+
+<script>
+    var currentQuiz, currentTab, quizList, quizCount;
+
+    var is_reloading = true;
+
+    quizCount = document.querySelectorAll(`[quiz-uuid]`).length;
+    maxScore = quizCount;
+
+    function progressBarRefresh() {
+        score = document.querySelectorAll('.dropdown-wrapper .answered').length + document.querySelectorAll('#quiz9-wrapper li.true').length;
+        quizPassed = document.querySelectorAll('.dropdown-wrapper .answered').length + document.querySelectorAll('#quiz9-wrapper li.true').length;
+
+        if (quizPassed == quizCount) {
+            return getResult();
+        }
+    }
+
+    function setClosestGalery() {
+        $('#galery').hide();
+        try {
+            document.querySelectorAll('#galery').forEach(el => {
+                $(el).hide()
+            })
+            highlightedItems = Array.from(document.querySelectorAll(`#quiz9-wrapper, .dropdown`));
+            highlightedItems = highlightedItems.sort((a, b) => {
+                return Array.from(a.closest('#container-wrapper').children).indexOf(a.closest('#galery')) - Array.from(b.closest('#container-wrapper').children).indexOf(b.closest('#galery'));
+            });
+            currentQuiz = highlightedItems.filter((item) => {
+                return (item.querySelectorAll('.wrong-hidden').length == 0 && item.querySelectorAll('.answered').length == 0);
+            })[0].closest("#galery");
+            $(currentQuiz).fadeIn();
+        } catch (e) {
+            console.log(e);
+            return progressBarRefresh()
+        }
+    }
+
+
+
+    function setAnswerDropwown(element) {
+        var parentItem = element.parentElement.parentElement;
+        var parentGalery = element.closest('#galery');
+        var newItem = "";
+        element.innerText.split(" ").forEach((el, index) => {
+            if (el != "") {
+                newItem += `<span class="${index == 0 ? "answered" : ""} ${element.hasAttribute('true') ? "true" : "false"}">${el}</span>`
+            }
+        })
+
+        if (element.hasAttribute('true')) {
+            if (!is_reloading) { saveAnswer($(element).closest('.dropdown-menu').attr('quiz-uuid'), { "answer": element.textContent }); }
+        } else {
+            if (save_all_ans == true) {
+                if (!is_reloading) { saveAnswer($(element).closest('.dropdown-menu').attr('quiz-uuid'), { "answer": element.textContent }); }
+            }
+        }
+
+        parentItem.outerHTML = newItem;
+
+        if (parentGalery.querySelectorAll('.dropdown-toggle').length <= 0) {
+            showNextSlideButton(parentGalery);
+        }
+        progressBarRefresh();
+    }
+
+    function setAnswerDropwownInput(element) {
+        var parentItem = element.parentElement.parentElement;
+        var parentGalery = element.closest('#galery');
+        var input = element.parentElement.querySelector("input");
+        var newItem = "";
+        if (input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`).trim() == '') {
+            return custom_alert('Введите ответ', 'warning');
+        }
+        input.value.split(" ").forEach((el, index) => {
+            if (el != "") {
+                newItem += `<span class="${index == 0 ? "answered" : ""} ${input.getAttribute('trueanswer').toLowerCase().replace(`’`, `'`).replace(`‘`, `'`).trim().split('|').includes(input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`).trim()) ? "true" : "false"}">${el}</span>`
+            }
+        })
+
+        if (input.getAttribute('trueanswer').toLowerCase().replace(`’`, `'`).replace(`‘`, `'`).trim().split('|').includes(input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`).trim())) {
+            if (!is_reloading) { saveAnswer($(element).closest('.dropdown-menu').attr('quiz-uuid'), { "answer": input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`).trim() }); }
+        } else {
+            if (save_all_ans == true) {
+                if (!is_reloading) { saveAnswer($(element).closest('.dropdown-menu').attr('quiz-uuid'), { "answer": input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`).trim() }); }
+            }
+        }
+
+        parentItem.outerHTML = newItem;
+
+        if (parentGalery.querySelectorAll('.dropdown-toggle').length <= 0) {
+            showNextSlideButton(parentGalery);
+        }
+        progressBarRefresh();
+    }
+
+
+
+
+    function goToNextSlide(btn) {
+        console.log('goToNextSlide');
+        btn.parentElement.remove();
+        if (quizPassed < quizCount) {
+            currentQuiz = currentQuiz.nextElementSibling;
+            while (currentQuiz == null || currentQuiz.id != 'galery') {
+                setClosestGalery();
+            }
+            setClosestGalery();
+        } else {
+            getResult();
+        }
+    }
+
+    function showNextSlideButton(galery) {
+        $(galery).append(`<div class="next-slide"><button class="btn btn-block w-100" onclick="goToNextSlide(this)">Далее</button></div>`).fadeIn();
+    }
+
+
+    function checkQuiz9(btn) {
+        if (btn.hasAttribute("true")) {
+            btn.parentElement.classList.add("true");
+            if (!is_reloading) { saveAnswer($(btn).closest('#quiz9-wrapper').attr('quiz-uuid'), { "answer": btn.textContent }); }
+        } else {
+            btn.parentElement.classList.add("wrong");
+            if (save_all_ans == true) {
+                if (!is_reloading) { saveAnswer($(btn).closest('#quiz9-wrapper').attr('quiz-uuid'), { "answer": btn.textContent }); }
+            }
+        }
+        btn.parentElement.parentElement.querySelectorAll("button:not([true])").forEach(element => {
+            element.classList.add("wrong-hidden");
+            element.disabled = true;
+        });
+        btn.parentElement.parentElement.querySelectorAll("button[true]").forEach(element => {
+            element.parentElement.classList.add("true");
+            element.parentElement.classList.add("answered");
+            element.disabled = true;
+        });
+
+        highlightedItems = Array.from(btn.closest('#galery').querySelectorAll(`#quiz9-wrapper, .dropdown`));
+        highlightedItems = highlightedItems.sort((a, b) => {
+            return Array.from(a.closest('#container-wrapper').children).indexOf(a.closest('#galery')) - Array.from(b.closest('#container-wrapper').children).indexOf(b.closest('#galery'));
+        });
+
+        if (!highlightedItems.filter((item) => {
+            return (item.querySelectorAll('.wrong-hidden').length == 0 && item.querySelectorAll('.answered').length == 0);
+        })[0]) {
+            showNextSlideButton(btn.closest('#galery'));
+        }
+        progressBarRefresh();
+    }
+
+    var pBlock = document.querySelectorAll('.dropdown-wrapper span');
+    pBlock.forEach(element => {
+        cls = element.classList.toString();
+        element.outerHTML = element.innerHTML.split(' ').map(string => { if (string.trim().replace('\n', ' ') != "") { return `<span class="${cls}"> ${string.trim().replace('\n', '')} </span>` } }).join('');
+    });
+
+    $.fn.shuffleChildren = function () {
+        $.each(this.get(), function (index, el) {
+            var $el = $(el);
+            var $find = $el.children();
+
+            $find.sort(function () {
+                return 0.5 - Math.random();
+            });
+
+            $el.empty();
+            $find.appendTo($el);
+        });
+    };
+
+    $("#quiz9-wrapper ul").shuffleChildren();
+    $(".dropdown-menu").not(':has(input)').shuffleChildren();
+
+
+    function saveAnswer(quiz_id, answer) {
+        data = {
+            "quiz_id": quiz_id,
+            "answer": answer,
+        }
+        $.ajax({
+            type: "POST",
+            url: `${window.location.origin}/speaking_club/register_answer/`,
+            data: JSON.stringify(data),
+        });
+    }
+    var quizList;
+    var save_all_ans = true;
+    var user_id;
+
+    quiz_ids = Array.from(document.querySelectorAll(`[quiz-uuid]`));
+    quiz_ids = quiz_ids.map(function (el) {
+        return el.getAttribute('quiz-uuid');
+    });
+
+    if (quiz_ids.length > 0) {
+        $.post(`${window.location.origin}/speaking_club/get_answers/`, {
+            "quiz_ids": quiz_ids.join(';;'),
+            "user_id": user_id,
+        }).done(function (data) {
+            if (data.status == 'OK') {
+                data.answers.forEach(el => {
+                    node = document.querySelector(`[quiz-uuid="${el.quiz_id}"]`);
+                    $el = $(node);
+                    if ($el.attr('id') == 'quiz-wrapper-quiz5') {
+                        $el.find('#textarea').val(el.answer.answer);
+                        $el.find('#submitquiz5').click();
+                    } else if ($el.attr('id') == 'quiz9-wrapper') {
+                        $el.find(`button:contains("${el.answer.answer}")`).click();
+                    } else if ($el.hasClass('dropdown-menu') && $el.find('.dropdown-item').length > 0) {
+                        $el.find(`button:contains("${el.answer.answer}")`).click();
+                    } else if ($el.hasClass('dropdown-menu') && $el.find('input').length > 0) {
+                        $el.find(`input`).val(el.answer.answer);
+                        $el.find(`button`).click();
+                    }
+                })
+                try {
+                    is_reloading = false;
+                    setClosestGalery()
+                } catch (e) { console.log(e) }
+            }
+
+        });
+    }
+
+    function getResult() {
+        console.log(13);
+        results = {};
+        currentTab = document.querySelector('#container-wrapper').classList[1];
+
+
+        dc = document.querySelector(`.${currentTab}`);
+        score = dc.querySelectorAll('.dropdown-wrapper .answered.true').length + dc.querySelectorAll('#quiz9-wrapper li.true').length - dc.querySelectorAll('#quiz9-wrapper li.wrong').length;
+        results[currentTab] = score;
+
+        data = results;
+        $.ajax({
+            type: "POST",
+            url: `${window.location.origin}/speaking_club/register_results/`,
+            data: JSON.stringify(data),
+        }).done(function (data) {
+            setTimeout(() => { window.location.href = '/speaking_club/profile/my_test_results/' }, 2000);
+        });
+
+    };
+
+
+    $('.btn.dropdown-toggle').click(function (el) {
+        el = this;
+        console.log(el);
+        if ($(el).closest('.dropdown').find('.dropdown-menu.show')[0]) {
+            $(el).closest('#galery').css('margin-bottom', `${$(el).closest('.dropdown').find('.dropdown-menu.show')[0].clientHeight}px`);
+        } else {
+            $(el).closest('#galery').css('margin-bottom', `0px`);
+        }
+    })
+
+
+
+</script>
+{% endblock %}

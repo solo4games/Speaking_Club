@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}
+Личный кабинет
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
+<div class="main d-lg-flex">
+    {% if request.user.student.email != None %}
+    <nav class="navbar navbar-expand-lg bg-white m-3 py-lg-5 rounded-3">
+        <div class="container-fluid">
+            <a class="navbar-brand mb-lg-5" href="#">
+                <img src="{% static 'img/logo.png' %}" alt="MyYestoday">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href=".">
+                            <i class="bi bi-mortarboard-fill mx-1"></i> Главная
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./my_test_results/">
+                            <i class="bi bi-book-fill mx-1"></i> Тестирование
+                        </a>
+                    </li>
+                    {% if request.user.student.is_paid %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="./my_group/">
+                            <i class="bi bi-people-fill mx-1"></i> Группа
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% endif %}
+
+
+    <div class="container mb-5 m-md-3 py-lg-5">
+        <div class="container d-flex justify-content-between align-items-center">
+            <h1 class="text-secondary">Привет, {{name}}!</h1>
+            <div class="dropdown">
+                <button class="btn text-secondary dropdown-toggle fs-2" type="button" id="profile-dropdown"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="profile-dropdown">
+                    <li><a class="dropdown-item" href="./logout/">Выйти</a></li>
+                </ul>
+            </div>
+        </div>
+
+        {% if request.user.student.email == None %}
+        <div class="container my-4">
+            <div class="alert alert-warning" role="alert">
+                Для того чтобы продолжить, введите ваш адрес электронной почты ниже и нажмите кнопку "Сохранить"
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-success w-100">Сохранить</button>
+            </form>
+        </div>
+        {% else %}
+
+
+        <div class="container d-flex flex-column float-start my-5 p-3 bg-white rounded-3 fit">
+            <h4 class="text-primary">
+                Сегодня
+            </h4>
+            <h3 class="text-custom-black">
+                {% now "j M, l" %}
+            </h3>
+        </div>
+
+        {% if block_num == 2 %}
+
+        <!-- Тестирование навыков -->
+        <div class="container container-fluid d-block d-md-flex p-0" id="tabs">
+            <button type="button" class="btn btn-primary disabled fill m-1">
+                Подключить телеграм
+            </button>
+            <button type="button" class="btn btn-primary disabled fill m-1 current-tab">
+                Тестирование навыков
+            </button>
+            {% if request.user.student.is_paid %}
+            <button type="button" class="btn btn-light disabled fill m-1" disabled>
+                Распределение в мини-группы
+            </button>
+            <button type="button" class="btn btn-light disabled fill m-1" disabled>
+                Практика в занятиях
+            </button>
+            {% endif %}
+        </div>
+
+        <div class="container container-fluid my-5">
+            <h3>
+                Задачи этапа:
+            </h3>
+
+            <ol>
+                <li class="fs-5">
+                    Оцени уровень грамматики
+                    {% if test.grammar >= 0 %}
+                    <i class="bi bi-check-all fs-4" style="color: #4BADF4;"></i>
+                    {%endif%}
+                </li>
+                <li class="fs-5">
+                    Оцени уровень лексики
+                    {% if test.vocabulary >= 0 %}
+                    <i class="bi bi-check-all fs-4" style="color: #4BADF4;"></i>
+                    {%endif%}
+                </li>
+                <li class="fs-5">
+                    Оцени уровень письма
+                    {% if test.writing >= 0 %}
+                    <i class="bi bi-check-all fs-4" style="color: #4BADF4;"></i>
+                    {%endif%}
+                </li>
+                <li class="fs-5">
+                    Оцени уровень чтения
+                    {% if test.reading >= 0 %}
+                    <i class="bi bi-check-all fs-4" style="color: #4BADF4;"></i>
+                    {%endif%}
+                </li>
+                <li class="fs-5">
+                    Оцени уровень аудирования
+                    {% if test.listening >= 0 %}
+                    <i class="bi bi-check-all fs-4" style="color: #4BADF4;"></i>
+                    {%endif%}
+                </li>
+                <li class="fs-5">
+                    Подведи общий уровень
+                    {% if request.user.student.get_user_level %}
+                    <span class="text-primary">{{request.user.student.get_user_level}}</span>
+                    {%endif%}
+                </li>
+            </ol>
+        </div>
+
+        {% elif block_num == 3 %}
+        <!-- Распределение в мини-группы -->
+        <div class="container container-fluid d-block d-md-flex p-0" id="tabs">
+            <button type="button" class="btn btn-primary disabled fill m-1">
+                Подключить телеграм
+            </button>
+            <button type="button" class="btn btn-primary disabled fill m-1">
+                Тестирование навыков
+            </button>
+            <button type="button" class="btn btn-primary disabled fill m-1 current-tab">
+                Распределение в мини-группы
+            </button>
+            <button type="button" class="btn btn-light fill disabled m-1" disabled>
+                Практика в занятиях
+            </button>
+        </div>
+
+        <div class="container container-fluid my-5">
+            <h3>
+                Задачи этапа:
+            </h3>
+
+            <ol>
+                <li class="fs-5">Перейдите в раздел «Группа»</li>
+                <li class="fs-5">Выберите дни для практики речи</li>
+                <li class="fs-5">Выберите время для практики речи</li>
+                <li class="fs-5">Нажмите кнопку «забронировать»</li>
+                <li class="fs-5">Подтвердите свой выбор</li>
+            </ol>
+        </div>
+
+        {% elif block_num == 4 %}
+        <!-- Практика в занятиях -->
+        <div class="container container-fluid d-block d-md-flex p-0" id="tabs">
+            <button type="button" class="btn btn-primary disabled fill m-1">
+                Подключить телеграм
+            </button>
+            <button type="button" class="btn btn-primary disabled fill m-1">
+                Тестирование навыков
+            </button>
+            <button type="button" class="btn btn-primary disabled fill m-1">
+                Распределение в мини-группы
+            </button>
+            <button type="button" class="btn btn-primary disabled fill m-1 current-tab">
+                Практика в занятиях
+            </button>
+        </div>
+
+        <div class="container container-fluid my-5">
+            <h3>
+                Задачи этапа:
+            </h3>
+
+            <ol>
+                <li class="fs-5">Вступите в чат своей группы (ссылка на чат в разделе «Группа»)</li>
+                <li class="fs-5">Приходите на встречи и практикуйте свою речь в вашей мини-группе</li>
+            </ol>
+        </div>
+
+        {% endif %}
+        {% endif %}
+
+    </div>
+</div>
+
+
+
+{% endblock %}

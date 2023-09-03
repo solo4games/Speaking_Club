@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}
+Результаты
+{% endblock %}
+
+{% block content %}
+
+<div class="container dd-flex justify-content-center py-5">
+    <div class="row dd-flex justify-content-center">
+        <div class="col col-md-8 dd-flex justify-content-center">
+            <h1 class="font-weight-bold text-center dd-flex justify-content-center">Итак, {{user_name}}</h1>
+            <h5 class="text-secondary text-center dd-flex justify-content-center">Ваши результаты по тестам:</h5>
+            <div class="bg-white rounded-25 p-4 my-5 dd-flex justify-content-center">
+                <div class="row p-2 dd-flex justify-content-center">
+                    <div class="col-md-12 col-xs-12 dd-flex justify-content-center">
+                        <h2 class="text-bold text-center dd-flex justify-content-center my-5">Ваш общий уровень:
+                            {{levels.total}}</h2>
+                    </div>
+                </div>
+
+                <button class="btn btn-lg btn-primary btn-block mt-4 w-100"
+                    onclick="window.location.href = '{{chat.chat}}'">Вступить в группу</button>
+
+            </div>
+        </div>
+    </div>
+    <div class="row dd-flex justify-content-center">
+        <div class="col col-md-12 dd-flex justify-content-center">
+            <h5 class="text-secondary text-center dd-flex justify-content-center">Ваши результаты по тестам:</h5>
+            <div class="row p-2 dd-flex justify-content-center">
+                <div class="col-md-2 dd-flex justify-content-center text-center m-2 level-wrapper">
+                    <div class="level rounded-circle bg-white d-flex justify-content-center align-items-center">
+                        <h1 class="my-2">{{levels.vocabulary}}</h1>
+                    </div>
+                    <h4 class="mt-4">
+                        Лексика
+                    </h4>
+                </div>
+                <div class="col-md-2 dd-flex justify-content-center text-center m-2 level-wrapper">
+                    <div class="level rounded-circle bg-white d-flex justify-content-center align-items-center">
+                        <h1 class="my-2">{{levels.listening}}</h1>
+                    </div>
+                    <h4 class="mt-4">
+                        Аудирование
+                    </h4>
+                </div>
+                <div class="col-md-2 dd-flex justify-content-center text-center m-2 level-wrapper">
+                    <div class="level rounded-circle bg-white d-flex justify-content-center align-items-center">
+                        <h1 class="my-2">{{levels.grammar}}</h1>
+                    </div>
+                    <h4 class="mt-4">
+                        Грамматика
+                    </h4>
+                </div>
+                <div class="col-md-2 dd-flex justify-content-center text-center m-2 level-wrapper">
+                    <div class="level rounded-circle bg-white d-flex justify-content-center align-items-center">
+                        <h1 class="my-2">{{levels.writing}}</h1>
+                    </div>
+                    <h4 class="mt-4">
+                        Письмо
+                    </h4>
+                </div>
+                <div class="col-md-2 dd-flex justify-content-center text-center m-2 level-wrapper">
+                    <div class="level rounded-circle bg-white d-flex justify-content-center align-items-center">
+                        <h1 class="my-2">{{levels.reading}}</h1>
+                    </div>
+                    <h4 class="mt-4">
+                        Чтение
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .level-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        align-items: center;
+    }
+
+    .level {
+        height: 10rem;
+        width: 10rem;
+        aspect-ratio: 1;
+    }
+</style>
+
+{% endblock %}

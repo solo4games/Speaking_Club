@@ -1,0 +1,76 @@
+version: '3'
+volumes:
+  pgdata:
+    driver: local
+
+services:
+  nginx:
+    restart: always
+    image: nginx:latest
+    expose:
+      - 8080
+    ports:
+      - "443:8080"
+      - "80:80"
+    volumes:
+      - ./speaking_club/static:/srv/www/speaking_club/static
+      - ./speaking_club/media:/srv/www/speaking_club/media
+      - ./speaking_club/logs:/srv/www/speaking_club/logs
+      - ./docker/nginx:/etc/nginx/conf.d
+      - /etc/ssl/:/etc/ssl
+    depends_on:
+      - python
+
+  python:
+    restart: always
+    build:
+      context: .
+      dockerfile: docker/python/Dockerfile
+    volumes:
+      - ./speaking_club:/srv/www/speaking_club
+    expose:
+      - 8000
+    ports:
+      - 8000:8000
+    env_file:
+      - .env
+    command: "gunicorn --log-level DEBUG -c gunicorn.py speaking_club.wsgi"
+
+  postgres:
+    image: postgres:15
+    ports:
+      - 49714:5432
+
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    env_file:
+      - .env
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - 1723:80
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    env_file:
+      - .env

@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Личный кабинет
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/profile_my_group.css' %}">
+<script src="{% static 'js/profile_my_group.js' %}"></script>
+
+<body>
+    <div class="main d-lg-flex">
+        <nav class="navbar navbar-expand-lg bg-white m-3 py-lg-5 rounded-3">
+            <div class="container-fluid">
+                <a class="navbar-brand mb-lg-5" href="#">
+                    <img src="{% static 'img/logo.png' %}" alt="MyYestoday">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="../">
+                                <i class="bi bi-mortarboard-fill mx-1"></i> Главная
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../my_test_results/">
+                                <i class="bi bi-book-fill mx-1"></i> Тестирование
+                            </a>
+                        </li>
+                        {% if request.user.student.is_paid %}
+                        <li class="nav-item">
+                            <a class="nav-link active" href=".">
+                                <i class="bi bi-people-fill mx-1"></i> Группа
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="container mb-5 m-md-3 py-lg-5">
+
+
+            <h3>Общий уровень: <span class="text-primary">
+                    {% if levels.total == '-' %}
+                    не известно, пройдите все тесты
+                    {% else %}
+                    {{levels.total}}
+                    {% endif %}
+                </span></h3>
+
+
+            {% if block_num == 0 %}
+            <h1 class="my-5">
+                Вы не прошли все тестирования на навыки. Выбор группы невозможен
+            </h1>
+            <button class="btn btn-primary px-5 mt-5">Тех. поддержка</button>
+            {% elif block_num == 1 %}
+
+            <h2 class="mt-5 fw-bold">Выбери дни для практики</h2>
+
+            <ul class="nav nav-pills nav-fill my-3" id="days">
+                <li class="nav-item m-1">
+                    <a class="nav-link" href="#" onclick="chooseIt(this)">Понедельник - Суббота</a>
+                </li>
+                <li class="nav-item m-1">
+                    <a class="nav-link" href="#" onclick="chooseIt(this)">Среда - Суббота</a>
+                </li>
+            </ul>
+
+            <h2 class="mt-5 fw-bold">Выбери время для практики</h2>
+
+            <ul class="nav nav-pills nav-fill my-3" id="time">
+                <li class="nav-item m-1">
+                    <a class="nav-link" href="#" onclick="chooseIt(this)">13:00 - 14:00</a>
+                </li>
+                <li class="nav-item m-1">
+                    <a class="nav-link" href="#" onclick="chooseIt(this)">15:00 - 16:00</a>
+                </li>
+                <li class="nav-item m-1">
+                    <a class="nav-link" href="#" onclick="chooseIt(this)">18:00 - 19:00</a>
+                </li>
+                <li class="nav-item m-1">
+                    <a class="nav-link" href="#" onclick="chooseIt(this)">19:00 - 20:00</a>
+                </li>
+                <li class="nav-item m-1">
+                    <a class="nav-link" href="#" onclick="chooseIt(this)">20:00 - 21:00</a>
+                </li>
+            </ul>
+
+            <button class="btn btn-primary px-5 mt-5" onclick="finish()">Забронировать</button>
+
+            <script>
+                function finish() {
+                    if ($('#days .active').text() === '' || $('#time .active').text() === '') {
+                        return custom_alert("Выберите дни и время для практики", 'danger');
+                    }
+                    $.post('/speaking_club/profile/my_group/choose/', {
+                        days: $('#days .active').text(),
+                        time: $('#time .active').text(),
+                    }, function (data) {
+                        console.log(data);
+                        if (typeof (data) == "string") {
+                            document.querySelector('html').innerHTML = data;
+                        } else if (data.status == 'ERROR') {
+                            console.log(data.result);
+                            return custom_alert(data.result, 'danger');
+                        }
+                        else {
+                            window.location.href = data.result;
+                        }
+                    });
+                }
+            </script>
+            {% elif block_num == 2 %}
+            <h2 class="mt-5 fw-bold">Выбери дни для практики</h2>
+
+            <ul class="nav nav-pills nav-fill my-3" id="days">
+                <li class="nav-item m-1">
+                    <a class="nav-link active" href="#">{{chat.group.weekdays}}</a>
+                </li>
+            </ul>
+
+            <h2 class="mt-5 fw-bold">Выбери время для практики</h2>
+
+            <ul class="nav nav-pills nav-fill my-3" id="time">
+                <li class="nav-item m-1">
+                    <a class="nav-link active" href="#">{{chat.group.get_time}}</a>
+                </li>
+            </ul>
+
+            <h2 class="mt-5 fw-bold">Ссылка на группу:</h2>
+
+            <a class="" href="{{chat.chat}}">
+                <h4>{{chat.chat}}</h4>
+            </a>
+
+
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+
+
+
+
+
+{% endblock %}

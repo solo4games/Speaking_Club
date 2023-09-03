@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Личный кабинет
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="{% static 'css/profile_test_results.css' %}">
+
+
+<div class="main d-lg-flex">
+    <nav class="navbar navbar-expand-lg bg-white m-3 py-lg-5 rounded-3">
+        <div class="container-fluid">
+            <a class="navbar-brand mb-lg-5" href="#">
+                <img src="{% static 'img/logo.png' %}" alt="MyYestoday">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="../">
+                            <i class="bi bi-mortarboard-fill mx-1"></i> Главная
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href=".">
+                            <i class="bi bi-book-fill mx-1"></i> Тестирование
+                        </a>
+                    </li>
+                    {% if request.user.student.is_paid %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="../my_group/">
+                            <i class="bi bi-people-fill mx-1"></i> Группа
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container mb-5 m-md-3 py-lg-5">
+        <h3>Общий уровень: <span class="text-primary">
+                {% if levels.total == '-' %}
+                не известно, пройдите все тесты
+                {% else %}
+                {{levels.total}}
+                {% endif %}
+            </span></h3>
+
+        <div class="container container-fluid">
+            <div class="test-card-wrapper row my-2">
+                <div class="test-card col-8 rounded-2 d-flex align-items-center mx-2 text-white
+                    {% if levels.grammar != -1%}
+                    bg-success
+                    {% endif %}
+                    " onclick="window.location.href = '../../test/grammar/'">
+                    <h1 class="m-4">
+                        Навык «Грамматика»
+                    </h1>
+                </div>
+
+                <div class="test-card-level col-3 bg-secondary rounded-2 d-flex flex-column justify-content-center text-center text-white
+                    {% if levels.grammar != -1%}
+                    bg-success
+                    {% endif %}
+                    ">
+                    {% if levels.grammar == -1%}
+                    Тут появится уровень навыка, когда ты пройдешь тест
+                    {% else %}
+                    <h1>{{levels.grammar}}</h1>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="test-card-wrapper row my-2">
+                <div class="test-card col-8 rounded-2 d-flex align-items-center mx-2 text-white
+                {% if levels.vocabulary != -1%}
+                bg-success
+                {% endif %}
+                " onclick="window.location.href = '../../test/vocabulary/'">
+                    <h1 class="m-4">
+                        Навык «Лексика»
+                    </h1>
+                </div>
+
+                <div class="test-card-level col-3 bg-secondary rounded-2 d-flex flex-column justify-content-center text-center text-white
+                    {% if levels.vocabulary != -1%}
+                    bg-success
+                    {% endif %}
+                    ">
+                    {% if levels.vocabulary == -1%}
+                    Тут появится уровень навыка, когда ты пройдешь тест
+                    {% else %}
+                    <h1>{{levels.vocabulary}}</h1>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="test-card-wrapper row my-2">
+                <div class="test-card col-8 rounded-2 d-flex align-items-center mx-2 text-white 
+                    {% if levels.writing != -1%}
+                    bg-success
+                    {% endif %}
+                    " onclick="window.location.href = '../../test/writing/'">
+                    <h1 class="m-4">
+                        Навык «Письмо»
+                    </h1>
+                </div>
+
+                <div class="test-card-level col-3 bg-secondary rounded-2 d-flex flex-column justify-content-center text-center text-white 
+                    {% if levels.writing != -1%}
+                    bg-success
+                    {% endif %}
+                    ">
+                    {% if levels.writing == -1%}
+                    Тут появится уровень навыка, когда ты пройдешь тест
+                    {% else %}
+                    <h1>{{levels.writing}}</h1>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="test-card-wrapper row my-2">
+                <div class="test-card col-8 rounded-2 d-flex align-items-center mx-2 text-white
+                    {% if levels.listening != -1%}
+                    bg-success
+                    {% endif %}
+                    " onclick="window.location.href = '../../test/listening/'">
+                    <h1 class="m-4">
+                        Навык «Аудирование»
+                    </h1>
+                </div>
+
+                <div class="test-card-level col-3 bg-secondary rounded-2 d-flex flex-column justify-content-center text-center text-white
+                    {% if levels.listening != -1%}
+                    bg-success
+                    {% endif %}
+                    ">
+                    {% if levels.listening == -1%}
+                    Тут появится уровень навыка, когда ты пройдешь тест
+                    {% else %}
+                    <h1>{{levels.listening}}</h1>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="test-card-wrapper row my-2">
+                <div class="test-card col-8 rounded-2 d-flex align-items-center mx-2 text-white
+                    {% if levels.reading != -1%}
+                    bg-success
+                    {% endif %}
+                    " onclick="window.location.href = '../../test/reading/'">
+                    <h1 class="m-4">
+                        Навык «Чтение»
+                    </h1>
+                </div>
+
+                <div class="test-card-level col-3 bg-secondary rounded-2 d-flex flex-column justify-content-center text-center text-white
+                    {% if levels.reading != -1%}
+                    bg-success
+                    {% endif %}
+                    ">
+                    {% if levels.reading == -1%}
+                    Тут появится уровень навыка, когда ты пройдешь тест
+                    {% else %}
+                    <h1>{{levels.reading}}</h1>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}

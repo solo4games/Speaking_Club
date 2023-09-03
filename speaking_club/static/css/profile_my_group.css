@@ -1,0 +1,9 @@
+#days .nav-link, #time .nav-link {
+    background-color: var(--bs-gray-200);
+    color: #717171 !important;
+}
+
+#days .nav-link.active, #time .nav-link.active {
+    background-color: #DBE6FD !important;
+    color: var(--bs-black) !important;
+}

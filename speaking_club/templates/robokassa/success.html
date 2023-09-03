@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+Успешная оплата
+{% endblock %}
+
+{% block content %}
+
+<head>
+    <script>
+        $.post('/speaking_club/update_session/', { 'InvId': {{ request.POST.InvId }} }, function (data) { });
+    </script>
+</head>
+
+<div class="container dd-flex justify-content-center py-5">
+    <div class="row dd-flex justify-content-center">
+        <div class="col col-md-8 dd-flex justify-content-center">
+            <h5 class="text-secondary text-center dd-flex justify-content-center">Спасибо за оплату!</h5>
+            <div class="bg-white rounded-25 p-4 my-5 dd-flex justify-content-center">
+                <div class="row p-2 dd-flex justify-content-center">
+                    <div class="col-md-12 col-xs-12 dd-flex justify-content-center">
+                        <h2 class="text-bold text-center dd-flex justify-content-center my-5">Приветствуем в Speaking
+                            club</h2>
+                        <h5 class="text-bold text-center dd-flex justify-content-center my-5">Ваша задача: <span
+                                class="text-primary">подключите Telegram bot</span> и далее <span
+                                class="text-primary">пройдите тесты</span> на уровень языка. После в telegram bot придет
+                            ссылка на вашу группу</h5>
+                    </div>
+                </div>
+                <div class="row dd-flex justify-content-center">
+                    <script async src="https://telegram.org/js/telegram-widget.js?22"
+                        data-telegram-login="ystd_lesson_bot" data-size="large"
+                        data-auth-url="https://{{ request.get_host }}/auth/complete/telegram"
+                        data-request-access="write"></script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

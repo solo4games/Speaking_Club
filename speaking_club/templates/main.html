@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% block title %}
+Регистрация
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .nav-link.active {
+        background-color: #DBE6FD !important;
+        color: #2E2E2E !important;
+    }
+
+    #offers .col.active .offer-wrapper,
+    #offers .col.active .offer-pick {
+        background-color: #DBE6FD !important;
+    }
+
+    .dd-flex {
+        display: flex;
+    }
+</style>
+
+<div class="container page-1 dd-flex justify-content-center py-5">
+    <div class="col col-md-6">
+        <h1 class="font-weight-bold text-center">Шаг №1</h1>
+        <h5 class="text-secondary text-center">Создайте аккаунт для распределения по группам</h5>
+        <div class="bg-white rounded-25 p-4 my-5">
+            <form class="needs-validation" onsubmit="nextStep(this);return false">
+                <div class="mb-4">
+                    <label for="user-email-form" class="form-label">E-mail</label>
+                    <input type="email" class="form-control" id="user-email-form" placeholder="Введите ваш эл. адрес"
+                        required>
+                </div>
+                <div class="my-4">
+                    <label for="user-name-form" class="form-label">Имя</label>
+                    <input type="text" class="form-control" id="user-name-form" placeholder="Введите ваше имя" required>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block mt-4 w-100" type="submit">Продолжить</button>
+            </form>
+        </div>
+        <div class="row text-center dd-flex justify-content-center my-2">
+            <a class="text-center" href="/login">Войти в существующий</a></button>
+        </div>
+    </div>
+</div>
+
+<div class="container page-2 dd-flex justify-content-center py-5">
+    <div class="col col-md-6">
+        <h1 class="font-weight-bold text-center">Шаг №2</h1>
+        <h5 class="text-secondary text-center">Выберите в какие дни будут проводиться ваши встречи</h5>
+        <div class="bg-white rounded-25 p-4 my-5">
+            <nav class="nav nav-pills flex-column text-center" role="tablist">
+                <a class="my-2 nav-link active">Понедельник - Среда - Пятница</a>
+                <a class="my-2 nav-link">Понедельник - Среда - Суббота</a>
+            </nav>
+            <button class="btn btn-lg btn-primary btn-block mt-4 w-100" onclick="nextStep(this)">Продолжить</button>
+
+        </div>
+        <div class="text-center">
+            <a class="text-primary text-center" onclick="prevStep(this)">Вернуться на шаг назад</a>
+        </div>
+    </div>
+</div>
+
+<div class="container page-3 dd-flex justify-content-center py-5">
+    <div class="col col-md-6">
+        <h1 class="font-weight-bold text-center">Шаг №3</h1>
+        <h5 class="text-secondary text-center">Выберите в какое время будут проводиться ваши встречи</h5>
+        <div class="bg-white rounded-25 p-4 my-5">
+            <nav class="nav nav-pills flex-column text-center" role="tablist">
+                <a class="my-2 nav-link active">18:00 - 19:00</a>
+                <a class="my-2 nav-link">19:00 - 20:00</a>
+                <a class="my-2 nav-link">20:00 - 21:00</a>
+            </nav>
+            <button class="btn btn-lg btn-primary btn-block mt-4 w-100" onclick="nextStep(this)">Продолжить</button>
+
+        </div>
+        <div class="text-center">
+            <a class="text-primary text-center" onclick="prevStep(this)">Вернуться на шаг назад</a>
+        </div>
+    </div>
+</div>
+
+<div class="container page-4 dd-flex justify-content-center py-5">
+    <div class="col col-md-8">
+        <h1 class="font-weight-bold text-center">Итак, <span id="user-name"></span></h1>
+        <h5 class="text-secondary text-center">Ты хочешь участвовать в Speaking club</h5>
+        <div class="bg-white rounded-25 p-4 my-5">
+            <div class="group-info row p-2">
+                <div class="col-6">
+                    <h5 class="text-secondary">Дни: <span id="user-weekdays"></span></h5>
+                </div>
+                <div class="col-6">
+                    <h5 class="text-secondary">Время: <span id="user-time"></span></h5>
+                </div>
+            </div>
+
+            <h1 class="font-weight-bold text-center my-4">Выбери пакет занятий:</h1>
+
+            <div class="row" id="offers">
+                {% for offer in offers %}
+                <div class="col" offer-id="{{offer.id}}">
+                    <div class="offer-wrapper pb-5 rounded p-2">
+                        <h4 class="offer-mounths text-center my-3">
+                            {{offer.period}}
+                        </h4>
+                        <p class="text-secondary offer-description">
+                            {{offer.description}}
+                        </p>
+
+
+                    </div>
+                    <div class="offer-pick my-3 rounded p-2 text-center">
+                        Выбрать
+                    </div>
+                    <div class="offer-price-wrapper">
+                        <h4 class="text-center">
+                            <span class="offer-price">{{offer.price}}</span>₽
+                        </h4>
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
+
+            <button class="btn btn-lg btn-primary btn-block mt-4 w-100" onclick="finish()">Перейти к оплате</button>
+
+        </div>
+        <div class="text-center">
+            <a class="text-primary text-center" onclick="prevStep(this)">Вернуться на шаг назад</a>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(".nav-link").click(function () {
+        $this = $(this);
+        $(this.parentElement).find(".nav-link.active").removeClass('active');
+        $this.addClass("active");
+    });
+
+    $("#offers .col").click(function () {
+        $this = $(this);
+        $("#offers .col.active").removeClass('active');
+        $this.addClass("active");
+    });
+</script>
+
+<script>
+
+
+    document.querySelectorAll('.container').forEach(element => {
+        $(element).hide();
+    })
+    $(".page-1").fadeIn();
+
+    $("#offers>.col:first-child()").addClass('active');
+
+    function finish() {
+        $.post('/speaking_club/order/', {
+            weekdays: $("#user-weekdays").text(),
+            time: $("#user-time").text(),
+            name: $("#user-name").text(),
+            offer_id: $("#offers>.col.active").attr("offer-id"),
+            email: $("#user-email-form").val(),
+        }, function (data) {
+            window.location.href = data.url;
+        });
+    }
+
+    function nextStep(element) {
+        container = element.parentElement.parentElement.parentElement;
+        $(container).hide();
+
+        if ($(container).hasClass('page-3')) {
+            console.log(123);
+            $("#user-weekdays").text($(".page-2 .nav-link.active").text());
+            $("#user-time").text($(".page-3 .nav-link.active").text());
+            $("#user-name").text($("#user-name-form").val());
+        }
+
+        nextContainer = container.nextElementSibling;
+        $(nextContainer).fadeIn();
+    }
+
+    function prevStep(element) {
+        container = element.parentElement.parentElement.parentElement;
+        $(container).hide();
+        nextContainer = container.previousElementSibling;
+        $(nextContainer).fadeIn();
+    }
+</script>
+
+
+{% endblock %}
